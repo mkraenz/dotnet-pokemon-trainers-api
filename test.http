@@ -1,0 +1,24 @@
+### Get all
+
+GET https://localhost:7132/pizza/
+
+### Get one
+GET https://localhost:7132/pizza/3
+
+### Create
+
+POST https://localhost:7132/pizza/
+Content-Type: application/json
+
+{"name":"Hawaii", "isGlutenFree":false}
+
+### Update
+
+PUT https://localhost:7132/pizza/3
+Content-Type: application/json
+
+{"name":"Prosciutto", "isGlutenFree":false, "id": 3}
+
+### Delete
+
+DELETE https://localhost:7132/pizza/3
