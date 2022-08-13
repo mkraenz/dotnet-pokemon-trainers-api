@@ -24,9 +24,17 @@ public class PokemonController : ControllerBase
     [HttpGet("{index}")]
     public async Task<ActionResult<Pokemon>> getOneAsync(int index)
     {
-        var pokemon = await _service.GetByIndexAsync(index);
-        if (pokemon is null) return NotFound();
-        return pokemon;
+        try
+        {
+            var pokemon = await _service.GetByIndexAsync(index);
+            if (pokemon is null) return NotFound();
+            return pokemon;
+
+        }
+        catch (System.Net.Http.HttpRequestException)
+        {
+            return NotFound();
+        }
     }
 
 }
