@@ -19,6 +19,8 @@ dotnet add package <package e.g. Microsoft.EntityFrameworkCore.Sqlite>
 dotnet tool install --global dotnet-ef
 ## create migration
 dotnet ef migrations add InitialCreate --context PizzaContext
+## remove all(?) migrations and the snapshot
+dotnet ef migrations remove --context PizzaContext
 ## apply migration
 dotnet ef database update --context PizzaContext
 ```

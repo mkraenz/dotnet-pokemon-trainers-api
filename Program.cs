@@ -1,12 +1,11 @@
-using DotnetTest.Data;
-using DotnetTest.Services;
+using TsttPokemon.Data;
+using TsttPokemon.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-
-builder.Services.AddSqlite<PizzaContext>("Data Source=test.db");
-builder.Services.AddScoped<PizzaService>();
+builder.Services.AddDbContext<PokemonContext>();
+builder.Services.AddScoped<PokemonService>();
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
@@ -20,7 +19,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 
-    app.CreateDbIfNotExists();
+    // app.CreateDbIfNotExists();
 }
 
 app.UseHttpsRedirection();
