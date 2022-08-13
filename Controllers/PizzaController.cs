@@ -8,13 +8,20 @@ namespace DotnetTest.Controllers;
 [Route("[controller]")]
 public class PizzaController : ControllerBase
 {
+    private readonly PizzaService service;
+
+    public PizzaController(PizzaService service)
+    {
+        this.service = service;
+    }
+
     [HttpGet]
-    public ActionResult<List<Pizza>> GetAll() => PizzaService.GetPizzas();
+    public IEnumerable<Pizza> GetAll() => service.GetPizzas();
 
     [HttpGet("{id}")]
     public ActionResult<Pizza> Get(int id)
     {
-        var pizza = PizzaService.Get(id);
+        var pizza = service.GetById(id);
         if (pizza is null)
         {
             return NotFound();
@@ -25,33 +32,48 @@ public class PizzaController : ControllerBase
     [HttpPost]
     public IActionResult Create(Pizza pizza)
     {
-        PizzaService.Add(pizza);
-        return CreatedAtAction(nameof(Create), new { id = pizza.Id }, pizza);
+        var createdPizza = service.Create(pizza);
+        return CreatedAtAction(nameof(Create), new { id = createdPizza.Id }, pizza);
     }
 
-    [HttpPut("{id}")]
-    public IActionResult Update(int id, Pizza pizza)
+    [HttpPut("{id}/updatesauce")]
+    public IActionResult UpdateSauce(int id, int sauceId)
     {
-        if (id != pizza.Id)
-        {
-            return BadRequest("provided ids do not match");
-        }
-        var existing = PizzaService.Get(pizza.Id);
-        if (existing is null)
+        var pizza = service.GetById(id);
+        if (pizza is null)
         {
             return NotFound();
         }
-        PizzaService.Update(pizza);
+        service.UpdateSauce(id, sauceId);
+        return NoContent();
+    }
+
+    [HttpPut("{id}/addtopping")]
+    public IActionResult AddTopping(int id, int toppingId)
+    {
+        var pizza = service.GetById(id);
+        if (pizza is null)
+        {
+            return NotFound();
+        }
+        if (
+            pizza.Toppings is not null &&
+            pizza.Toppings.FirstOrDefault(t => t.Id == toppingId) is not null
+        )
+        {
+            return Conflict("Topping already added to this pizza");
+        }
+        service.AddTopping(id, toppingId);
         return NoContent();
     }
 
     [HttpDelete("{id}")]
     public IActionResult Delete(int id)
     {
-        var existing = PizzaService.Get(id);
+        var existing = service.GetById(id);
         if (existing is null)
             return NotFound();
-        PizzaService.Delete(id);
+        service.DeleteById(id);
         return NoContent();
     }
 }

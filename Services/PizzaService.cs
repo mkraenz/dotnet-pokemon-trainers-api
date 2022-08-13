@@ -1,49 +1,73 @@
+using DotnetTest.Data;
 using DotnetTest.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace DotnetTest.Services;
 
 public class PizzaService
 {
-    static List<Pizza> Pizzas { get; }
+    private readonly PizzaContext _context;
 
-    static int nextId = 3;
-
-    static PizzaService()
+    public PizzaService(PizzaContext context)
     {
-        Pizzas = new List<Pizza>(){
-            new Pizza { Id = 1, Name="Classico", IsGlutenFree = false},
-            new Pizza { Id =2, Name="Margherita", IsGlutenFree = true},
-        };
+        _context = context;
     }
 
-    public static List<Pizza> GetPizzas() => Pizzas;
-
-    public static Pizza Get(int id) => Pizzas.FirstOrDefault(p => p.Id == id);
-
-    public static void Add(Pizza pizza)
+    public IEnumerable<Pizza> GetPizzas()
     {
-        pizza.Id = nextId;
-        nextId++;
-        Pizzas.Add(pizza);
+        return _context.Pizzas
+            .AsNoTracking()
+            .ToList();
     }
 
-    public static void Delete(int id)
+    public Pizza? GetById(int id)
     {
-        var pizza = Get(id);
-        if (pizza is null)
+        return _context.Pizzas.Include(p => p.Toppings).Include(p => p.Sauce).AsNoTracking().SingleOrDefault(p => p.Id == id);
+    }
+
+    public Pizza Create(Pizza pizza)
+    {
+        _context.Pizzas.Add(pizza);
+        _context.SaveChanges();
+        return pizza;
+    }
+
+    public void DeleteById(int id)
+    {
+        var pizza = GetById(id);
+        if (pizza is not null)
         {
-            return;
+            _context.Remove(pizza);
+            _context.SaveChanges();
+
         }
-        Pizzas.Remove(pizza);
     }
 
-    public static void Update(Pizza pizza)
+    public void UpdateSauce(int id, int sauceId)
     {
-        var index = Pizzas.FindIndex(p => p.Id == pizza.Id);
-        if (index == -1)
+        var pizza = _context.Pizzas.Find(id);
+        var sauce = _context.Sauces.Find(sauceId);
+        if (pizza is null || sauce is null)
         {
-            return;
+            throw new InvalidOperationException("Pizza or sauce not found");
         }
-        Pizzas[index] = pizza;
+        pizza.Sauce = sauce;
+        _context.SaveChanges();
+    }
+
+    public void AddTopping(int id, int toppingId)
+    {
+        var pizza = _context.Pizzas.Find(id);
+        var topping = _context.Toppings.Find(toppingId);
+        if (pizza is null || topping is null)
+        {
+            throw new InvalidOperationException("Pizza or topping not found");
+        }
+        if (pizza.Toppings is null)
+        {
+            pizza.Toppings = new List<Topping>();
+        }
+        pizza.Toppings.Add(topping);
+        _context.SaveChanges();
     }
 }

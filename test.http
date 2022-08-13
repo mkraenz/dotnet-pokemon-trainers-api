@@ -3,21 +3,42 @@
 GET https://localhost:7132/pizza/
 
 ### Get one
-GET https://localhost:7132/pizza/3
+GET https://localhost:7132/pizza/4
 
 ### Create
 
 POST https://localhost:7132/pizza/
 Content-Type: application/json
 
-{"name":"Hawaii", "isGlutenFree":false}
+{"name":"Salami", "isGlutenFree":false}
 
-### Update
 
-PUT https://localhost:7132/pizza/3
+### Create full
+
+POST https://localhost:7132/pizza/
 Content-Type: application/json
 
-{"name":"Prosciutto", "isGlutenFree":false, "id": 3}
+{
+  "name": "BBQ Beef",
+  "sauce": {
+    "name": "BBQ",
+    "isVegan": false
+  },
+  "toppings": [
+    {
+      "name": "Smoked Beef Brisket",
+      "calories": 250
+    }
+  ]
+}
+
+### Update sauce
+
+PUT https://localhost:7132/pizza/4/updatesauce?sauceId=2
+
+### add topping
+
+PUT https://localhost:7132/pizza/4/addtopping?toppingId=2
 
 ### Delete
 
