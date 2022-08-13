@@ -1,4 +1,5 @@
-namespace PokeApi;
+namespace TsttPokemon.PokeApi;
+
 using System;
 using System.Collections.Generic;
 

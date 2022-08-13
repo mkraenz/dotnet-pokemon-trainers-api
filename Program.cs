@@ -1,4 +1,6 @@
 using TsttPokemon.Data;
+using TsttPokemon.Models;
+using TsttPokemon.PokeApi;
 using TsttPokemon.Services;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -12,7 +14,11 @@ builder.Logging.AddConsole();
 builder.Services.AddHttpClient();
 builder.Services.AddStackExchangeRedisCache(options => { options.Configuration = configuration["RedisCacheUrl"]; });
 builder.Services.AddDbContext<PokemonContext>();
+
+builder.Services.AddScoped<IPokeApi, PokeApiService>();
+builder.Services.AddScoped<ICache<Pokemon>, PokemonCache>();
 builder.Services.AddScoped<PokemonService>();
+
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();

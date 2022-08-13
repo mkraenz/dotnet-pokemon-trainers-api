@@ -1,5 +1,5 @@
 using Microsoft.EntityFrameworkCore;
-using PokeApi;
+using TsttPokemon.PokeApi;
 
 namespace TsttPokemon.Models;
 
