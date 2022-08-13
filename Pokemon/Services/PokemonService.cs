@@ -9,6 +9,8 @@ using TsttPokemon.Models;
 
 namespace TsttPokemon.Services;
 
+// Redis Caching docs https://docs.microsoft.com/en-us/aspnet/core/performance/caching/distributed?view=aspnetcore-6.0#use-the-distributed-cache
+// HttpClient docs https://docs.microsoft.com/en-us/dotnet/api/system.net.http.httpclient?view=net-6.0
 public class PokemonService
 {
     private readonly PokemonContext _context;
