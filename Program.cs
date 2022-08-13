@@ -2,6 +2,7 @@ using TsttPokemon.Data;
 using TsttPokemon.Services;
 
 var builder = WebApplication.CreateBuilder(args);
+ConfigurationManager configuration = builder.Configuration;
 
 // Logging
 builder.Logging.ClearProviders();
@@ -9,6 +10,7 @@ builder.Logging.AddConsole();
 
 // Add services to the container.
 builder.Services.AddHttpClient();
+builder.Services.AddStackExchangeRedisCache(options => { options.Configuration = configuration["RedisCacheUrl"]; });
 builder.Services.AddDbContext<PokemonContext>();
 builder.Services.AddScoped<PokemonService>();
 builder.Services.AddControllers();
