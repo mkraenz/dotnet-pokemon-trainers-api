@@ -26,12 +26,11 @@ public class PokemonService
         _pokeApi = pokeApi;
         _logger = logger;
         _cache = cache;
-
     }
 
     public IEnumerable<Pokemon> GetAll()
     {
-        return _context.Pokemons.AsNoTracking().ToList();
+        return _context.Pokemons.AsNoTracking().OrderBy(p => p.Index).ToList();
     }
 
     public async Task<Pokemon?> GetByIndexAsync(int index)
