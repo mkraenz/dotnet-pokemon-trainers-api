@@ -6,6 +6,7 @@ namespace TsttPokemon.Data;
 public class PokemonContext : DbContext
 {
     public DbSet<Pokemon> Pokemons => Set<Pokemon>();
+    public DbSet<Trainer> Trainers => Set<Trainer>();
 
     protected readonly IConfiguration Configuration;
 

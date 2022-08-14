@@ -43,3 +43,7 @@ PUT https://localhost:7132/pizza/4/addtopping?toppingId=2
 ### Delete
 
 DELETE https://localhost:7132/pizza/3
+
+### Get Trainer
+
+GET https://localhost:7132/trainer/3fa85f64-5717-4562-b3fc-2c963f66afa6

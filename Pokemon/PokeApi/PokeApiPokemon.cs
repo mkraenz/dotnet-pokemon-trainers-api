@@ -13,7 +13,7 @@ public partial class PokeApiPokemon
     public int Id { get; set; }
 
     [JsonProperty("name")]
-    public string Name { get; set; }
+    public string Name { get; set; } = "";
 
     [JsonProperty("species")]
     public Species Species { get; set; }
@@ -40,10 +40,10 @@ public partial class Species
 public partial class Sprites
 {
     [JsonProperty("back_default")]
-    public Uri BackDefault { get; set; }
+    public Uri BackDefault { get; set; } = new Uri("");
 
     [JsonProperty("front_default")]
-    public Uri FrontDefault { get; set; }
+    public Uri FrontDefault { get; set; } = new Uri("");
 }
 
 public partial class TypeElement

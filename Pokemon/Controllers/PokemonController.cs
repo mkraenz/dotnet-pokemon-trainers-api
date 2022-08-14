@@ -5,7 +5,7 @@ using TsttPokemon.Services;
 namespace TsttPokemon.Controllers;
 
 [ApiController]
-[Route("pokemon")]
+[Route("api/pokemon")]
 public class PokemonController : ControllerBase
 {
     private readonly PokemonService _service;

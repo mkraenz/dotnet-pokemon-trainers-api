@@ -18,6 +18,7 @@ builder.Services.AddDbContext<PokemonContext>();
 builder.Services.AddScoped<IPokeApi, PokeApiService>();
 builder.Services.AddScoped<ICache<Pokemon>, PokemonCache>();
 builder.Services.AddScoped<PokemonService>();
+builder.Services.AddScoped<TrainerService>();
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
