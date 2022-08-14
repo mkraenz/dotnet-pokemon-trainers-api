@@ -21,6 +21,8 @@ builder.Services.AddScoped<PokemonService>();
 builder.Services.AddScoped<TrainerService>();
 
 builder.Services.AddControllers();
+builder.Services.AddRazorPages();
+
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
@@ -32,14 +34,22 @@ if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
+    app.UseExceptionHandler("/Error");
+    // default HSTS value is 30 days. consider changing for production, see https://aka.ms/aspnetcore-hsts.
+    app.UseHsts();
 
     // app.CreateDbIfNotExists();
 }
 
 app.UseHttpsRedirection();
+app.UseStaticFiles();
+
+app.UseRouting();
 
 app.UseAuthorization();
 
 app.MapControllers();
+
+app.MapRazorPages();
 
 app.Run();
