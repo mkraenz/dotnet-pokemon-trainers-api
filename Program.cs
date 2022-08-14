@@ -1,9 +1,9 @@
-using TsttPokemon.Data;
-using TsttPokemon.Models;
-using TsttPokemon.PokeApi;
-using TsttPokemon.Services;
+using dotnettest.Pokemon.Data;
+using dotnettest.Pokemon.Models;
+using dotnettest.Pokemon.PokeApi;
+using dotnettest.Pokemon.Services;
 
-var builder = WebApplication.CreateBuilder(args);
+WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 ConfigurationManager configuration = builder.Configuration;
 
 // Logging
@@ -12,7 +12,7 @@ builder.Logging.AddConsole();
 
 // Add services to the container.
 builder.Services.AddHttpClient();
-builder.Services.AddStackExchangeRedisCache(options => { options.Configuration = configuration["RedisCacheUrl"]; });
+builder.Services.AddStackExchangeRedisCache(options => options.Configuration = configuration["RedisCacheUrl"]);
 builder.Services.AddDbContext<PokemonContext>();
 
 builder.Services.AddScoped<IPokeApi, PokeApiService>();
@@ -27,16 +27,16 @@ builder.Services.AddRazorPages();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-var app = builder.Build();
+WebApplication app = builder.Build();
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
-    app.UseSwagger();
-    app.UseSwaggerUI();
-    app.UseExceptionHandler("/Error");
+    _ = app.UseSwagger();
+    _ = app.UseSwaggerUI();
+    _ = app.UseExceptionHandler("/Error");
     // default HSTS value is 30 days. consider changing for production, see https://aka.ms/aspnetcore-hsts.
-    app.UseHsts();
+    _ = app.UseHsts();
 
     // app.CreateDbIfNotExists();
 }

@@ -1,20 +1,24 @@
+using dotnettest.Pokemon.Models;
+
 using Microsoft.EntityFrameworkCore;
-using TsttPokemon.Models;
 
-namespace TsttPokemon.Data;
-
-public class PokemonContext : DbContext
+namespace dotnettest.Pokemon.Data
 {
-    public DbSet<Pokemon> Pokemons => Set<Pokemon>();
-    public DbSet<Trainer> Trainers => Set<Trainer>();
-
-    protected readonly IConfiguration Configuration;
-
-    public PokemonContext(IConfiguration configuration)
+    public class PokemonContext : DbContext
     {
-        Configuration = configuration;
+        public DbSet<Models.Pokemon> Pokemons => Set<Models.Pokemon>();
+        public DbSet<Trainer> Trainers => Set<Trainer>();
+
+        protected readonly IConfiguration Configuration;
+
+        public PokemonContext(IConfiguration configuration)
+        {
+            Configuration = configuration;
+        }
+
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            _ = optionsBuilder.UseNpgsql(Configuration.GetConnectionString("WebApiDatabase"));
+        }
     }
-
-    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) => optionsBuilder.UseNpgsql(Configuration.GetConnectionString("WebApiDatabase"));
-
 }

@@ -1,7 +1,8 @@
-namespace TsttPokemon.Services;
-
-public interface ICache<T>
+namespace dotnettest.Pokemon.Services
 {
-    Task<T?> get(string key);
-    Task set(string key, T obj);
+    public interface ICache<T>
+    {
+        Task<T?> Get(string key);
+        Task Set(string key, T obj);
+    }
 }

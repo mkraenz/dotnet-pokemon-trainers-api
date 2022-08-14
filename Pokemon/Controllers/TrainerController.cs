@@ -1,44 +1,44 @@
+using dotnettest.Pokemon.Models;
+using dotnettest.Pokemon.Services;
+
 using Microsoft.AspNetCore.Mvc;
-using TsttPokemon.Models;
-using TsttPokemon.Services;
 
-namespace TsttPokemon.Controllers;
-
-[ApiController]
-[Route("api/trainers")]
-public class TrainerController : ControllerBase
+namespace dotnettest.Pokemon.Controllers
 {
-    private readonly TrainerService _trainers;
-    public TrainerController(TrainerService trainers)
+    [ApiController]
+    [Route("api/trainers")]
+    public class TrainerController : ControllerBase
     {
-        _trainers = trainers;
-    }
-
-    [HttpGet]
-    public IEnumerable<Trainer> GetAll()
-    {
-        return _trainers.GetAll();
-    }
-
-    // asp.net takes over validation of Guid and returns 400 if necessary
-    [HttpGet("{id}")]
-    public ActionResult<Trainer> Get(Guid id)
-    {
-        Trainer? trainer = _trainers.Get(id);
-        if (trainer is not null)
-            return trainer;
-        return NotFound();
-    }
-
-    [HttpPost]
-    public ActionResult<Trainer> Create(Trainer trainer)
-    {
-        bool exists = _trainers.Exists(trainer.Id);
-        if (exists)
+        private readonly TrainerService _trainers;
+        public TrainerController(TrainerService trainers)
         {
-            return Conflict("Id already exists");
+            _trainers = trainers;
         }
-        Trainer created = _trainers.Create(trainer);
-        return created;
+
+        [HttpGet]
+        public IEnumerable<Trainer> GetAll()
+        {
+            return _trainers.GetAll();
+        }
+
+        // asp.net takes over validation of Guid and returns 400 if necessary
+        [HttpGet("{id}")]
+        public ActionResult<Trainer> Get(Guid id)
+        {
+            Trainer? trainer = _trainers.Get(id);
+            return trainer is not null ? (ActionResult<Trainer>)trainer : (ActionResult<Trainer>)NotFound();
+        }
+
+        [HttpPost]
+        public ActionResult<Trainer> Create(Trainer trainer)
+        {
+            bool exists = _trainers.Exists(trainer.Id);
+            if (exists)
+            {
+                return Conflict("Id already exists");
+            }
+            Trainer created = _trainers.Create(trainer);
+            return created;
+        }
     }
 }

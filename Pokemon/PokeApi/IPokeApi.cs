@@ -1,10 +1,7 @@
-
-
-using TsttPokemon.Models;
-
-namespace TsttPokemon.PokeApi;
-
-public interface IPokeApi
+namespace dotnettest.Pokemon.PokeApi
 {
-    Task<Pokemon> getByIndexAsync(int index);
+    public interface IPokeApi
+    {
+        Task<Models.Pokemon> GetByIndexAsync(int index);
+    }
 }

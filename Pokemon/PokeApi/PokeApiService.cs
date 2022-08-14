@@ -1,27 +1,25 @@
-namespace TsttPokemon.PokeApi;
-
 using Microsoft.Net.Http.Headers;
-using TsttPokemon.Models;
 
-public class PokeApiService : IPokeApi
+namespace dotnettest.Pokemon.PokeApi
 {
-    private readonly HttpClient _httpClient;
-    public PokeApiService(HttpClient httpClient)
+    public class PokeApiService : IPokeApi
     {
-        _httpClient = httpClient;
-        _httpClient.DefaultRequestHeaders.Add(
-            HeaderNames.Accept, "application/json");
-    }
-
-    public async Task<Pokemon> getByIndexAsync(int index)
-    {
-        Uri uri = new Uri($"https://pokeapi.co/api/v2/pokemon/{index}");
-        PokeApiPokemon? apiPokemon = await _httpClient.GetFromJsonAsync<PokeApiPokemon>(uri);
-        if (apiPokemon is null)
+        private readonly HttpClient _httpClient;
+        public PokeApiService(HttpClient httpClient)
         {
-            throw new InvalidOperationException($"Pokemon with index {index} could not be fetched from PokeApi");
+            _httpClient = httpClient;
+            _httpClient.DefaultRequestHeaders.Add(
+                HeaderNames.Accept, "application/json");
         }
-        return Pokemon.fromPokeApi(apiPokemon, uri);
-    }
 
+        public async Task<Models.Pokemon> GetByIndexAsync(int index)
+        {
+            Uri uri = new($"https://pokeapi.co/api/v2/pokemon/{index}");
+            PokeApiPokemon? apiPokemon = await _httpClient.GetFromJsonAsync<PokeApiPokemon>(uri);
+            return apiPokemon is null
+                ? throw new InvalidOperationException($"Pokemon with index {index} could not be fetched from PokeApi")
+                : Models.Pokemon.fromPokeApi(apiPokemon, uri);
+        }
+
+    }
 }

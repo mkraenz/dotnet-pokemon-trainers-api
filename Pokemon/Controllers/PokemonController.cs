@@ -1,40 +1,40 @@
+using dotnettest.Pokemon.Services;
+
 using Microsoft.AspNetCore.Mvc;
-using TsttPokemon.Models;
-using TsttPokemon.Services;
 
-namespace TsttPokemon.Controllers;
-
-[ApiController]
-[Route("api/species")]
-public class PokemonController : ControllerBase
+namespace dotnettest.Pokemon.Controllers
 {
-    private readonly PokemonService _service;
-
-    public PokemonController(PokemonService service)
+    [ApiController]
+    [Route("api/species")]
+    public class PokemonController : ControllerBase
     {
-        _service = service;
-    }
+        private readonly PokemonService _service;
 
-    [HttpGet]
-    public IEnumerable<Pokemon> getAll()
-    {
-        return _service.GetAll();
-    }
-
-    [HttpGet("{index}")]
-    public async Task<ActionResult<Pokemon>> getOneAsync(int index)
-    {
-        try
+        public PokemonController(PokemonService service)
         {
-            var pokemon = await _service.GetByIndexAsync(index);
-            if (pokemon is null) return NotFound();
-            return pokemon;
+            _service = service;
+        }
 
-        }
-        catch (System.Net.Http.HttpRequestException)
+        [HttpGet]
+        public IEnumerable<Models.Pokemon> GetAll()
         {
-            return NotFound();
+            return _service.GetAll();
         }
+
+        [HttpGet("{index}")]
+        public async Task<ActionResult<Models.Pokemon>> GetOneAsync(int index)
+        {
+            try
+            {
+                Models.Pokemon? pokemon = await _service.GetByIndexAsync(index);
+                return pokemon is null ? (ActionResult<Models.Pokemon>)NotFound() : (ActionResult<Models.Pokemon>)pokemon;
+            }
+            catch (HttpRequestException)
+            {
+                return NotFound();
+            }
+        }
+
     }
 
 }
