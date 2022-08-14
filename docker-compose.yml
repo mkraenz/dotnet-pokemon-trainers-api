@@ -23,3 +23,25 @@ services:
       - ALLOW_EMPTY_PASSWORD=yes
     ports:
       - 6379:6379
+
+  keycloak:
+    image: docker.io/bitnami/keycloak:latest
+    ports:
+      - 4344:8080
+    links:
+      - db:database
+    environment:
+      DB_VENDOR: POSTGRES
+      KEYCLOAK_DATABASE_HOST: database
+      KEYCLOAK_DATABASE_PORT: 5432
+      # TODO: automatically create db on postgres. Currently, just manually run `CREATE DATABASE "keycloak";` via Adminer -> SQL command
+      KEYCLOAK_DATABASE_NAME: keycloak
+      KEYCLOAK_DATABASE_USER: root
+      KEYCLOAK_DATABASE_PASSWORD: example
+      KEYCLOAK_CREATE_ADMIN_USER: "true"
+      KEYCLOAK_ADMIN_USER: myadmin
+      KEYCLOAK_ADMIN_PASSWORD: Test1234
+      KEYCLOAK_MANAGEMENT_USER: mymanager
+      KEYCLOAK_MANAGEMENT_PASSWORD: Test1234
+    depends_on:
+      - db
