@@ -1,6 +1,6 @@
 ### Get all
 
-GET https://localhost:7132/pizza/
+GET https://localhost:7132/api/species
 
 ### Get one
 GET https://localhost:7132/pizza/4
@@ -44,6 +44,27 @@ PUT https://localhost:7132/pizza/4/addtopping?toppingId=2
 
 DELETE https://localhost:7132/pizza/3
 
-### Get Trainer
+### Get all trainer
 
-GET https://localhost:7132/trainer/3fa85f64-5717-4562-b3fc-2c963f66afa6
+GET https://localhost:7132/api/trainers/
+
+### Get one trainer
+GET https://localhost:7132/api/trainers/901311d2-d41b-4e1a-9238-51842a5684ac
+
+### Create trainer
+
+POST https://localhost:7132/api/trainers/
+Content-Type: application/json
+
+{
+  "name": "Ash Ketchum",
+  "email": "ash@ketchum.jp"
+}
+
+### Get all cached species
+
+GET https://localhost:7132/api/species/
+
+### Get species by index
+
+GET https://localhost:7132/api/species/1
