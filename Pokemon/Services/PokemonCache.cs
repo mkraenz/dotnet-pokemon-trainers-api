@@ -1,4 +1,5 @@
 using System.Text;
+using System.Text.Json.Serialization;
 
 using dotnettest.Pokemon.Models;
 
@@ -8,6 +9,7 @@ using Newtonsoft.Json;
 
 namespace dotnettest.Pokemon.Services
 {
+    /// <summary>Intentionally Overengineered!</summary>
     public class PokemonCache : ICache<Models.Pokemon>
     {
         private readonly IDistributedCache _cache;
@@ -25,7 +27,7 @@ namespace dotnettest.Pokemon.Services
             byte[]? cachedPkmnRaw = await _cache.GetAsync(cacheKey);
             if (cachedPkmnRaw is null)
             {
-                return null;
+                return default;
             }
 
             _logger.LogInformation("Hit", new { cacheKey });
@@ -37,6 +39,12 @@ namespace dotnettest.Pokemon.Services
         {
             byte[] pokemonForCache = Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(pokemon));
             await _cache.SetAsync(cacheKey, pokemonForCache);
+        }
+
+        public async Task<bool> IsHit(string cacheKey)
+        {
+            var hit = await Get(cacheKey);
+            return hit is not null;
         }
     }
 }

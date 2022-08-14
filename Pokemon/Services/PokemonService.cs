@@ -4,6 +4,8 @@ using dotnettest.Pokemon.PokeApi;
 
 using Microsoft.EntityFrameworkCore;
 
+using m = dotnettest.Pokemon.Models;
+
 namespace dotnettest.Pokemon.Services
 {
 
@@ -14,12 +16,12 @@ namespace dotnettest.Pokemon.Services
         private readonly PokemonContext _context;
         private readonly IPokeApi _pokeApi;
         private readonly ILogger _logger;
-        private readonly ICache<Models.Pokemon> _cache;
+        private readonly ICache<m.Pokemon> _cache;
 
         public PokemonService(
             PokemonContext context,
             IPokeApi pokeApi,
-            ICache<Models.Pokemon> cache,
+            ICache<m.Pokemon> cache,
             ILogger<PokemonService> logger
         )
         {
@@ -29,23 +31,24 @@ namespace dotnettest.Pokemon.Services
             _cache = cache;
         }
 
-        public IEnumerable<Models.Pokemon> GetAll()
+        public IEnumerable<m.Pokemon> GetAll()
         {
             return _context.Pokemons.AsNoTracking().OrderBy(p => p.Index).ToList();
         }
 
-        public async Task<Models.Pokemon?> GetByIndexAsync(int index)
+        public async Task<m.Pokemon?> GetByIndexAsync(int index)
         {
             // try redis cache
             string cacheKey = $"pkmn{index}";
-            Models.Pokemon? cachedPkmn = await _cache.Get(cacheKey);
+            // THIS redis CACHE IS ADDED ONLY FOR FUN AND LEARNING AND DOES NOT SERVE ANY USEFUL PURPOSE!
+            m.Pokemon? cachedPkmn = await _cache.Get(cacheKey);
             if (cachedPkmn is not null)
             {
                 return cachedPkmn;
             }
 
             // try postgres
-            Models.Pokemon? pokemon = _context.Pokemons.AsNoTracking().SingleOrDefault(p => p.Index == index);
+            m.Pokemon? pokemon = _context.Pokemons.AsNoTracking().SingleOrDefault(p => p.Index == index);
             if (pokemon is not null)
             {
                 return pokemon;
@@ -53,7 +56,7 @@ namespace dotnettest.Pokemon.Services
 
             // fetch from pokeapi and save to db + cache
             _logger.LogInformation("Pkmn not found in cache. Fetching from pokeapi", new { index });
-            Models.Pokemon newPokemon = await _pokeApi.GetByIndexAsync(index);
+            m.Pokemon newPokemon = await _pokeApi.GetByIndexAsync(index);
             _ = _context.Pokemons.Add(newPokemon);
             _ = await _context.SaveChangesAsync();
 

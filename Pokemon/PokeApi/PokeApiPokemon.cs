@@ -1,52 +1,52 @@
-using Newtonsoft.Json;
+using System.Text.Json.Serialization;
 
 namespace dotnettest.Pokemon.PokeApi
 {
     public partial class PokeApiPokemon
     {
-        [JsonProperty("id")]
+        [JsonPropertyName("id")]
         public int Id { get; set; }
 
-        [JsonProperty("name")]
+        [JsonPropertyName("name")]
         public string Name { get; set; } = "";
 
-        [JsonProperty("species")]
+        [JsonPropertyName("species")]
         public Species Species { get; set; } = new Species();
 
-        [JsonProperty("sprites")]
+        [JsonPropertyName("sprites")]
         public Sprites Sprites { get; set; } = new Sprites();
 
-        [JsonProperty("types")]
+        [JsonPropertyName("types")]
         public List<TypeElement> Types { get; set; } = new List<TypeElement>();
 
-        [JsonProperty("weight")]
+        [JsonPropertyName("weight")]
         public int Weight { get; set; }
     }
 
     public partial class Species
     {
-        [JsonProperty("name")]
+        [JsonPropertyName("name")]
         public string Name { get; set; } = "";
 
-        [JsonProperty("url")]
-        public Uri Url { get; set; } = new Uri("");
+        [JsonPropertyName("url")]
+        public Uri? Url { get; set; }
     }
 
     public partial class Sprites
     {
-        [JsonProperty("back_default")]
-        public Uri BackDefault { get; set; } = new Uri("");
+        [JsonPropertyName("back_default")]
+        public string? BackDefault { get; set; }
 
-        [JsonProperty("front_default")]
-        public Uri FrontDefault { get; set; } = new Uri("");
+        [JsonPropertyName("front_default")]
+        public string? FrontDefault { get; set; }
     }
 
     public partial class TypeElement
     {
-        [JsonProperty("slot")]
+        [JsonPropertyName("slot")]
         public int Slot { get; set; }
 
-        [JsonProperty("type")]
+        [JsonPropertyName("type")]
         public Species Type { get; set; } = new Species();
     }
 

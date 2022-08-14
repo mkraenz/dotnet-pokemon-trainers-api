@@ -18,7 +18,7 @@ namespace dotnettest.Pokemon.PokeApi
             PokeApiPokemon? apiPokemon = await _httpClient.GetFromJsonAsync<PokeApiPokemon>(uri);
             return apiPokemon is null
                 ? throw new InvalidOperationException($"Pokemon with index {index} could not be fetched from PokeApi")
-                : Models.Pokemon.fromPokeApi(apiPokemon, uri);
+                : Models.Pokemon.FromPokeApi(apiPokemon, uri);
         }
 
     }

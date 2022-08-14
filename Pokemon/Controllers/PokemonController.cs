@@ -27,7 +27,7 @@ namespace dotnettest.Pokemon.Controllers
             try
             {
                 Models.Pokemon? pokemon = await _service.GetByIndexAsync(index);
-                return pokemon is null ? (ActionResult<Models.Pokemon>)NotFound() : (ActionResult<Models.Pokemon>)pokemon;
+                return pokemon is null ? NotFound() : pokemon;
             }
             catch (HttpRequestException)
             {

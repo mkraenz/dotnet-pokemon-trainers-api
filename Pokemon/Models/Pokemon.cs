@@ -17,14 +17,19 @@ namespace dotnettest.Pokemon.Models
         /// <summary>example https://pokeapi.co/api/v2/pokemon/ditto</summary>
         public string Link { get; set; } = "";
 
-        public static Pokemon fromPokeApi(PokeApiPokemon apiPokemon, Uri link)
+        public string? SpriteUrl { get; set; } = "";
+
+
+        public static Pokemon FromPokeApi(PokeApiPokemon apiPokemon, Uri link)
         {
+            var x = 5;
             Pokemon pokemon = new()
             {
                 Name = apiPokemon.Name,
                 Index = apiPokemon.Id,
                 Link = link.ToString(),
-                Type = apiPokemon.Types.First().Type.Name
+                Type = apiPokemon.Types.First().Type.Name,
+                SpriteUrl = apiPokemon.Sprites.FrontDefault?.ToString(),
             };
             return pokemon;
         }
