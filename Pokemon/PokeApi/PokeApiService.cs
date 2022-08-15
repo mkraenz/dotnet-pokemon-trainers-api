@@ -12,12 +12,12 @@ namespace dotnettest.Pokemon.PokeApi
                 HeaderNames.Accept, "application/json");
         }
 
-        public async Task<Models.Species> GetByIndexAsync(int index)
+        public async Task<Models.Species> GetByIdAsync(int id)
         {
-            Uri uri = new($"https://pokeapi.co/api/v2/pokemon/{index}");
+            Uri uri = new($"https://pokeapi.co/api/v2/pokemon/{id}");
             PokeApiPokemon? apiPokemon = await _httpClient.GetFromJsonAsync<PokeApiPokemon>(uri);
             return apiPokemon is null
-                ? throw new InvalidOperationException($"Pokemon with index {index} could not be fetched from PokeApi")
+                ? throw new InvalidOperationException($"Pokemon with id {id} could not be fetched from PokeApi")
                 : Models.Species.FromPokeApi(apiPokemon, uri);
         }
 

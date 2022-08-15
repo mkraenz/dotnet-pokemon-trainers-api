@@ -65,6 +65,6 @@ Content-Type: application/json
 
 GET https://localhost:7132/api/species/
 
-### Get species by index
+### Get species by id
 
 GET https://localhost:7132/api/species/1

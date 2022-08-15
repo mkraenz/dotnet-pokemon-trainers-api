@@ -22,12 +22,12 @@ namespace dotnettest.Pokemon.Controllers
             return _service.GetAll();
         }
 
-        [HttpGet("{index}")]
-        public async Task<ActionResult<Species>> GetOneAsync(int index)
+        [HttpGet("{id}")]
+        public async Task<ActionResult<Species>> GetOneAsync(int id)
         {
             try
             {
-                Species? species = await _service.GetByIndexAsync(index);
+                Species? species = await _service.GetByIdAsync(id);
                 return species is null ? NotFound() : species;
             }
             catch (HttpRequestException)

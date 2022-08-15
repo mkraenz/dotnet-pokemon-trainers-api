@@ -33,13 +33,13 @@ namespace dotnettest.Pokemon.Services
 
         public IEnumerable<Species> GetAll()
         {
-            return _context.Species.AsNoTracking().OrderBy(p => p.Index).ToList();
+            return _context.Species.AsNoTracking().OrderBy(p => p.Id).ToList();
         }
 
-        public async Task<Species?> GetByIndexAsync(int index)
+        public async Task<Species?> GetByIdAsync(int id)
         {
             // try redis cache
-            string cacheKey = $"species-{index}";
+            string cacheKey = $"species-{id}";
             Species? cachedSpecies = await _cache.Get(cacheKey);
             if (cachedSpecies is not null)
             {
@@ -47,21 +47,21 @@ namespace dotnettest.Pokemon.Services
             }
 
             // try postgres
-            Species? species = _context.Species.AsNoTracking().FirstOrDefault(p => p.Index == index);
+            Species? species = _context.Species.AsNoTracking().FirstOrDefault(p => p.Id == id);
             if (species is not null)
             {
                 return species;
             }
 
             // fetch from pokeapi and save to db + cache
-            _logger.LogInformation("Species not found in cache. Fetching from pokeapi", new { index });
-            Species newSpecies = await _pokeApi.GetByIndexAsync(index);
+            _logger.LogInformation("Species not found in cache. Fetching from pokeapi", new { id });
+            Species newSpecies = await _pokeApi.GetByIdAsync(id);
             _ = _context.Species.Add(newSpecies);
             _ = await _context.SaveChangesAsync();
 
             await _cache.Set(cacheKey, newSpecies);
 
-            _logger.LogInformation("Fetched from pokeapi, saved Species to database, and cached", new { index });
+            _logger.LogInformation("Fetched from pokeapi, saved Species to database, and cached", new { id });
             return newSpecies;
         }
 
