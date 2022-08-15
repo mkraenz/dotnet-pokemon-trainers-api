@@ -9,7 +9,6 @@ namespace dotnettest.Pokemon.Models
 
         [Required]
         public int SpeciesId { get; set; }
-        [JsonIgnore]
         public Species Species { get; set; } = default!;
 
         [Required]

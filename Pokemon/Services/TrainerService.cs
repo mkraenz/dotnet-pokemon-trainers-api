@@ -16,7 +16,11 @@ namespace dotnettest.Pokemon.Services
 
         public IEnumerable<Trainer> GetAll()
         {
-            return _context.Trainers.AsNoTracking().ToList();
+            // https://github.com/dotnet/efcore/issues/17212#issuecomment-522188174
+            // in the sql the null is handled properly, thus disabling warning 
+#nullable disable warnings
+            return _context.Trainers.Include(t => t.Pokemons).ThenInclude(p => p.Species).AsNoTracking().ToList();
+#nullable enable warnings
         }
 
         public Trainer? Get(Guid id)

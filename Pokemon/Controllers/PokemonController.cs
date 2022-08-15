@@ -3,6 +3,7 @@ using dotnettest.Pokemon.Models;
 using dotnettest.Pokemon.Services;
 
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 using m = dotnettest.Pokemon.Models;
 
@@ -23,6 +24,12 @@ namespace dotnettest.Pokemon.Controllers
             _speciess = speciess;
             _trainers = trainers;
             _logger = logger;
+        }
+
+        [HttpGet]
+        public IEnumerable<m.Pokemon> GetAll()
+        {
+            return _context.Pokemons.Include(p => p.Species).AsNoTracking().ToList();
         }
 
 

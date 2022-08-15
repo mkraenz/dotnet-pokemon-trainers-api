@@ -1,4 +1,5 @@
 using System.ComponentModel.DataAnnotations;
+using System.Text.Json.Serialization;
 
 using dotnettest.Pokemon.PokeApi;
 
@@ -21,8 +22,8 @@ namespace dotnettest.Pokemon.Models
 
         public string SpriteUrl { get; set; } = "";
 
+        [JsonIgnore]
         public ICollection<Pokemon>? Pokemons { get; set; }
-
 
         public static Species FromPokeApi(PokeApiPokemon apiPokemon, Uri link)
         {
