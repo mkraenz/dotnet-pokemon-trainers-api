@@ -37,6 +37,11 @@ namespace dotnettest.Pokemon.Controllers
             {
                 return Conflict("Id already exists");
             }
+            bool emailExists = _trainers.EmailExists(trainer.Email);
+            if (emailExists)
+            {
+                return Conflict("Email already exists");
+            }
             Trainer created = _trainers.Create(trainer);
             return created;
         }

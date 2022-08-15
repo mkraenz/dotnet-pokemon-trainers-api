@@ -35,5 +35,10 @@ namespace dotnettest.Pokemon.Services
         {
             return Get(id) is not null;
         }
+
+        public bool EmailExists(string email)
+        {
+            return _context.Trainers.AsNoTracking().Any(p => p.Email.ToLower() == email.ToLower());
+        }
     }
 }
