@@ -39,7 +39,6 @@ namespace dotnettest.Pokemon.Services
         public async Task<Species?> GetByIndexAsync(int index)
         {
             // try redis cache
-            // TODO move to _cache.getKey(int index)
             string cacheKey = $"species-{index}";
             Species? cachedSpecies = await _cache.Get(cacheKey);
             if (cachedSpecies is not null)
