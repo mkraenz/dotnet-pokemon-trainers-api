@@ -34,6 +34,10 @@ dotnet ef migrations add InitialCreate --context PizzaContext
 dotnet ef migrations remove --context PizzaContext
 ## apply migration
 dotnet ef database update --context PizzaContext
+
+## revert migration (2 commands)
+dotnet ef database update <previous migration name>
+dotnet ef migrations remove
 ```
 
 ### Clearing the (useless :) ) redis cache

@@ -18,5 +18,7 @@ namespace dotnettest.Pokemon.Models
         [StringLength(998)] // RFC5322
         public string Email { get; set; } = "";
 
+        [DataType(DataType.DateTime)]
+        public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
     }
 }
