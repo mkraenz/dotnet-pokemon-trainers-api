@@ -62,7 +62,6 @@ Content-Type: application/json
 }
 
 ### Get all cached species
-
 GET https://localhost:7132/api/species/
 
 ### Get species by id
@@ -70,13 +69,12 @@ GET https://localhost:7132/api/species/
 GET https://localhost:7132/api/species/1
 
 ### Create pokemon
-######  TODO target request
 POST https://localhost:7132/api/pokemons/
 Content-Type: application/json
 
 {
-  "trainerId": "111-111-111-111",
+  "trainerId": "3fa85f64-5717-4562-b3fc-2c963f66afa2",
   "speciesId": 132,
   "level": 5,
-  "nickname": "Scytherino"
+  "nickname": "Ditter"
 }
