@@ -9,17 +9,16 @@ namespace dotnettest.Pokemon.Data
         public DbSet<Species> Species => Set<Species>();
         public DbSet<Trainer> Trainers => Set<Trainer>();
 
-        // TODO check whether _configuration works too
-        protected readonly IConfiguration Configuration;
+        protected readonly IConfiguration _configuration;
 
         public PokemonContext(IConfiguration configuration)
         {
-            Configuration = configuration;
+            _configuration = configuration;
         }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            _ = optionsBuilder.UseNpgsql(Configuration.GetConnectionString("WebApiDatabase"));
+            _ = optionsBuilder.UseNpgsql(_configuration.GetConnectionString("WebApiDatabase"));
         }
     }
 }

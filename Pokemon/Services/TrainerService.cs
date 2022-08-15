@@ -21,7 +21,7 @@ namespace dotnettest.Pokemon.Services
 
         public Trainer? Get(Guid id)
         {
-            return _context.Trainers.AsNoTracking().SingleOrDefault(p => p.Id == id);
+            return _context.Trainers.AsNoTracking().FirstOrDefault(p => p.Id == id);
         }
 
         public Trainer Create(Trainer trainer)

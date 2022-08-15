@@ -8,6 +8,7 @@ ConfigurationManager configuration = builder.Configuration;
 
 // Logging
 builder.Logging.ClearProviders();
+// TODO figure out how to log the object argument
 builder.Logging.AddConsole();
 
 // Add services to the container.

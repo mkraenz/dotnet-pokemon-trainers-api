@@ -48,7 +48,7 @@ namespace dotnettest.Pokemon.Services
             }
 
             // try postgres
-            Species? species = _context.Species.AsNoTracking().SingleOrDefault(p => p.Index == index);
+            Species? species = _context.Species.AsNoTracking().FirstOrDefault(p => p.Index == index);
             if (species is not null)
             {
                 return species;
