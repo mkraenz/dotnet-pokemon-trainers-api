@@ -1,17 +1,19 @@
-using dotnettest.Pokemon.PokeApi;
+using System.ComponentModel.DataAnnotations;
 
-using Microsoft.EntityFrameworkCore;
+using dotnettest.Pokemon.PokeApi;
 
 namespace dotnettest.Pokemon.Models
 {
-    [Index(nameof(Index))]
-    public class Pokemon
+    public class Species
     {
-        public int Id { get; set; }
+        [MaxLength(200)]
         public string Name { get; set; } = "";
+
+        [MaxLength(50)]
         public string Type { get; set; } = "";
 
         /// <summary>the number in the pokedex</summary>
+        [Key]
         public int Index { get; set; }
 
         /// <summary>example https://pokeapi.co/api/v2/pokemon/ditto</summary>
@@ -20,9 +22,9 @@ namespace dotnettest.Pokemon.Models
         public string SpriteUrl { get; set; } = "";
 
 
-        public static Pokemon FromPokeApi(PokeApiPokemon apiPokemon, Uri link)
+        public static Species FromPokeApi(PokeApiPokemon apiPokemon, Uri link)
         {
-            Pokemon pokemon = new()
+            Species species = new()
             {
                 Name = apiPokemon.Name,
                 Index = apiPokemon.Id,
@@ -30,7 +32,7 @@ namespace dotnettest.Pokemon.Models
                 Type = apiPokemon.Types.First().Type.Name,
                 SpriteUrl = apiPokemon.Sprites.FrontDefault.ToString(),
             };
-            return pokemon;
+            return species;
         }
     }
 }

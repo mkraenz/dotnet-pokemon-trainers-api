@@ -11,19 +11,19 @@ namespace dotnettest.Pokemon.PokeApi
         public string Name { get; set; } = "";
 
         [JsonPropertyName("species")]
-        public Species Species { get; set; } = new Species();
+        public PokeApiSpecies Species { get; set; } = new PokeApiSpecies();
 
         [JsonPropertyName("sprites")]
-        public Sprites Sprites { get; set; } = new Sprites();
+        public PokeApiSprites Sprites { get; set; } = new PokeApiSprites();
 
         [JsonPropertyName("types")]
-        public List<TypeElement> Types { get; set; } = new List<TypeElement>();
+        public List<PokeApiTypeElement> Types { get; set; } = new List<PokeApiTypeElement>();
 
         [JsonPropertyName("weight")]
         public int Weight { get; set; }
     }
 
-    public partial class Species
+    public partial class PokeApiSpecies
     {
         [JsonPropertyName("name")]
         public string Name { get; set; } = "";
@@ -32,7 +32,7 @@ namespace dotnettest.Pokemon.PokeApi
         public string Url { get; set; } = "";
     }
 
-    public partial class Sprites
+    public partial class PokeApiSprites
     {
         [JsonPropertyName("back_default")]
         public string BackDefault { get; set; } = "";
@@ -41,13 +41,13 @@ namespace dotnettest.Pokemon.PokeApi
         public string FrontDefault { get; set; } = "";
     }
 
-    public partial class TypeElement
+    public partial class PokeApiTypeElement
     {
         [JsonPropertyName("slot")]
         public int Slot { get; set; }
 
         [JsonPropertyName("type")]
-        public Species Type { get; set; } = new Species();
+        public PokeApiSpecies Type { get; set; } = new PokeApiSpecies();
     }
 
 }

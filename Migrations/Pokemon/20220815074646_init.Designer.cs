@@ -9,11 +9,11 @@ using dotnettest.Pokemon.Data;
 
 #nullable disable
 
-namespace dotnettest.Migrations.Pokemon
+namespace dotnettest.Migrations
 {
     [DbContext(typeof(PokemonContext))]
-    [Migration("20220814153804_addSpriteUrlToPokemon")]
-    partial class addSpriteUrlToPokemon
+    [Migration("20220815074646_init")]
+    partial class init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -24,16 +24,13 @@ namespace dotnettest.Migrations.Pokemon
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
-            modelBuilder.Entity("dotnettest.Pokemon.Models.Pokemon", b =>
+            modelBuilder.Entity("dotnettest.Pokemon.Models.Species", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("Index")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("integer");
 
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("Index")
-                        .HasColumnType("integer");
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Index"));
 
                     b.Property<string>("Link")
                         .IsRequired()
@@ -41,7 +38,8 @@ namespace dotnettest.Migrations.Pokemon
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("text");
+                        .HasMaxLength(200)
+                        .HasColumnType("character varying(200)");
 
                     b.Property<string>("SpriteUrl")
                         .IsRequired()
@@ -49,13 +47,12 @@ namespace dotnettest.Migrations.Pokemon
 
                     b.Property<string>("Type")
                         .IsRequired()
-                        .HasColumnType("text");
+                        .HasMaxLength(50)
+                        .HasColumnType("character varying(50)");
 
-                    b.HasKey("Id");
+                    b.HasKey("Index");
 
-                    b.HasIndex("Index");
-
-                    b.ToTable("Pokemons");
+                    b.ToTable("Species");
                 });
 
             modelBuilder.Entity("dotnettest.Pokemon.Models.Trainer", b =>
@@ -66,7 +63,8 @@ namespace dotnettest.Migrations.Pokemon
 
                     b.Property<string>("Email")
                         .IsRequired()
-                        .HasColumnType("text");
+                        .HasMaxLength(998)
+                        .HasColumnType("character varying(998)");
 
                     b.Property<string>("Name")
                         .IsRequired()

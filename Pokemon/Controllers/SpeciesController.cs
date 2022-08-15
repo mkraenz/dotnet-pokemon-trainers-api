@@ -1,3 +1,4 @@
+using dotnettest.Pokemon.Models;
 using dotnettest.Pokemon.Services;
 
 using Microsoft.AspNetCore.Mvc;
@@ -6,28 +7,28 @@ namespace dotnettest.Pokemon.Controllers
 {
     [ApiController]
     [Route("api/species")]
-    public class PokemonController : ControllerBase
+    public class SpeciesController : ControllerBase
     {
-        private readonly PokemonService _service;
+        private readonly SpeciesService _service;
 
-        public PokemonController(PokemonService service)
+        public SpeciesController(SpeciesService service)
         {
             _service = service;
         }
 
         [HttpGet]
-        public IEnumerable<Models.Pokemon> GetAll()
+        public IEnumerable<Species> GetAll()
         {
             return _service.GetAll();
         }
 
         [HttpGet("{index}")]
-        public async Task<ActionResult<Models.Pokemon>> GetOneAsync(int index)
+        public async Task<ActionResult<Species>> GetOneAsync(int index)
         {
             try
             {
-                Models.Pokemon? pokemon = await _service.GetByIndexAsync(index);
-                return pokemon is null ? NotFound() : pokemon;
+                Species? species = await _service.GetByIndexAsync(index);
+                return species is null ? NotFound() : species;
             }
             catch (HttpRequestException)
             {

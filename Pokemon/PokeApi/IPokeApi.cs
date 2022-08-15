@@ -2,6 +2,6 @@ namespace dotnettest.Pokemon.PokeApi
 {
     public interface IPokeApi
     {
-        Task<Models.Pokemon> GetByIndexAsync(int index);
+        Task<Models.Species> GetByIndexAsync(int index);
     }
 }

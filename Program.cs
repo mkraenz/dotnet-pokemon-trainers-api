@@ -16,8 +16,8 @@ builder.Services.AddStackExchangeRedisCache(options => options.Configuration = c
 builder.Services.AddDbContext<PokemonContext>();
 
 builder.Services.AddScoped<IPokeApi, PokeApiService>();
-builder.Services.AddScoped<ICache<Pokemon>, PokemonCache>();
-builder.Services.AddScoped<PokemonService>();
+builder.Services.AddScoped<ICache<Species>, SpeciesCacheService>();
+builder.Services.AddScoped<SpeciesService>();
 builder.Services.AddScoped<TrainerService>();
 
 builder.Services.AddControllers();

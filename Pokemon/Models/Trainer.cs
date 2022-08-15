@@ -15,6 +15,7 @@ namespace dotnettest.Pokemon.Models
 
         [Required]
         [EmailAddress]
+        [StringLength(998)] // RFC5322
         public string Email { get; set; } = "";
 
     }

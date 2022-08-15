@@ -6,9 +6,10 @@ namespace dotnettest.Pokemon.Data
 {
     public class PokemonContext : DbContext
     {
-        public DbSet<Models.Pokemon> Pokemons => Set<Models.Pokemon>();
+        public DbSet<Species> Species => Set<Species>();
         public DbSet<Trainer> Trainers => Set<Trainer>();
 
+        // TODO check whether _configuration works too
         protected readonly IConfiguration Configuration;
 
         public PokemonContext(IConfiguration configuration)

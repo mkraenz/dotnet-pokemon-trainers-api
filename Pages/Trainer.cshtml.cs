@@ -22,15 +22,16 @@ namespace dotnettest.Pages
         public void OnGet()
         {
             Trainer = _context.Trainers.OrderBy(t => t.Name).FirstOrDefault();
-            List<Pokemon.Models.Pokemon> pokemons = _context.Pokemons.Take(6).ToList();
+            // TODO use the actual team
+            List<Species> pokemons = _context.Species.Take(6).ToList();
             Team = new Team()
             {
-                First = pokemons[0],
-                Second = pokemons[1],
-                Third = pokemons[2],
-                Fourth = pokemons[3],
-                Fifth = pokemons[4],
-                Sixth = pokemons[5],
+                First = pokemons.ElementAtOrDefault(0),
+                Second = pokemons.ElementAtOrDefault(1),
+                Third = pokemons.ElementAtOrDefault(2),
+                Fourth = pokemons.ElementAtOrDefault(3),
+                Fifth = pokemons.ElementAtOrDefault(4),
+                Sixth = pokemons.ElementAtOrDefault(5),
             };
             _logger.LogInformation($"trainer {Trainer?.Name}");
         }
