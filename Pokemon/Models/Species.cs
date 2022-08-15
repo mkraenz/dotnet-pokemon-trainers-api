@@ -21,6 +21,8 @@ namespace dotnettest.Pokemon.Models
 
         public string SpriteUrl { get; set; } = "";
 
+        public ICollection<Pokemon>? Pokemons { get; set; }
+
 
         public static Species FromPokeApi(PokeApiPokemon apiPokemon, Uri link)
         {
@@ -34,5 +36,6 @@ namespace dotnettest.Pokemon.Models
             };
             return species;
         }
+
     }
 }

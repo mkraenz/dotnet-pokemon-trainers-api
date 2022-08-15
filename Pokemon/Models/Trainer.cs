@@ -20,5 +20,7 @@ namespace dotnettest.Pokemon.Models
 
         [DataType(DataType.DateTime)]
         public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
+
+        public ICollection<Pokemon>? Pokemons { get; set; }
     }
 }
