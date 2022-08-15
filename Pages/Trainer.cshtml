@@ -2,21 +2,85 @@
 @model TrainerModel
 @{
     ViewData["Title"] = "Overview";
+    int counter = 0;
 }
 
 <main class="text-center d-flex flex-column justify-content-between fullwidth">
-    @* alternatively @Model.Trainer.Name works too *@
-    <h1 class="display-4 mb-3">Welcome back, Trainer @(Model.Trainer?.Name)</h1>
-    <div class="d-flex flex-row justify-content-between pd-1">
-        <img width="100px" src="@(Model.Team?.First?.Species.SpriteUrl)">@(Model.Team?.First?.Species.Name)</img>
-        <img width="100px" src="@(Model.Team?.Second?.Species.SpriteUrl)">@(Model.Team?.Second?.Species.Name)</img>
-        <img width="100px" src="@(Model.Team?.Third?.Species.SpriteUrl)">@(Model.Team?.Third?.Species.Name)</img>
-        <img width="100px" src="@(Model.Team?.Fourth?.Species.SpriteUrl)">@(Model.Team?.Fourth?.Species.Name)</img>
-        <img width="100px" src="@(Model.Team?.Fifth?.Species.SpriteUrl)">@(Model.Team?.Fifth?.Species.Name)</img>
-        <img width="100px" src="@(Model.Team?.Sixth?.Species.SpriteUrl)">@(Model.Team?.Sixth?.Species.Name)</img>
+    <h1 class="display-4 mb-5 mt-5">Welcome back, Trainer @(Model.Trainer?.Name)</h1>
+    <h2 class="mb-4">Your Team</h2>
 
+    <div class="container mb-5">
+        <div class="row">
+            <div class="col">
+                <figure class="col d-flex flex-column align-items-center position-relative">
+                    <img width="100px" src='@Url.Content("~/images/pokeball.png")' style="opacity: 0.2;" />
+                    <img width="100px" src="@(Model.Team?.First?.Species.SpriteUrl)" class="position-absolute" />
+                    <figcaption class="text-capitalize">@(Model.Team?.First?.Species.Name)</figcaption>
+                </figure>
+            </div>
+
+            <div class="col">
+                <figure class="col d-flex flex-column align-items-center position-relative">
+                    <img width="100px" src='@Url.Content("~/images/pokeball.png")' style="opacity: 0.2;" />
+                    <img width="100px" src="@(Model.Team?.Second?.Species.SpriteUrl)"  class="position-absolute"/>
+                    <figcaption class="text-capitalize">@(Model.Team?.Second?.Species.Name)</figcaption>
+                </figure>
+            </div>
+
+            <div class="col">
+                <figure class="col d-flex flex-column align-items-center position-relative">
+                    <img width="100px" src='@Url.Content("~/images/pokeball.png")' style="opacity: 0.2;" />
+                    <img width="100px" src="@(Model.Team?.Third?.Species.SpriteUrl)"  class="position-absolute"/>
+                    <figcaption class="text-capitalize">@(Model.Team?.Third?.Species.Name)</figcaption>
+                </figure>
+            </div>
+
+            <div class="col">
+                <figure class="col d-flex flex-column align-items-center position-relative">
+                    <img width="100px" src='@Url.Content("~/images/pokeball.png")' style="opacity: 0.2;" />
+                    <img width="100px" src="@(Model.Team?.Fourth?.Species.SpriteUrl)"  class="position-absolute"/>
+                    <figcaption class="text-capitalize">@(Model.Team?.Fourth?.Species.Name)</figcaption>
+                </figure>
+            </div>
+
+
+            <div class="col">
+                <figure class="col d-flex flex-column align-items-center position-relative">
+                    <img width="100px" src='@Url.Content("~/images/pokeball.png")' style="opacity: 0.2;" />
+                    <img width="100px" src="@(Model.Team?.Fifth?.Species.SpriteUrl)"  class="position-absolute"/>
+                    <figcaption class="text-capitalize">@(Model.Team?.Fifth?.Species.Name)</figcaption>
+                </figure>
+            </div>
+
+            <div class="col">
+                <figure class="col d-flex flex-column align-items-center position-relative">
+                    <img width="100px" src='@Url.Content("~/images/pokeball.png")' style="opacity: 0.2;" />
+                    <img width="100px" src="@(Model.Team?.Sixth?.Species.SpriteUrl)"  class="position-absolute"/>
+                    <figcaption class="text-capitalize">@(Model.Team?.Sixth?.Species.Name)</figcaption>
+                </figure>
+            </div>
+        </div>
     </div>
-    @* <ol>
-        @foreach (var pokemon in Model.Trainer.Team) {
-        </ol> *@
+
+    <div class="mb-5">
+        <h2 class="mb-4">Your Bank</h2>
+        <div class="container">
+            <div class="row">
+                @foreach (var pokemon in Model.Pokemons)
+                {
+                    @* TODO how to make this more responsive. or at least rows of 6 *@
+
+                        <div class="col">
+                            <figure class="col d-flex flex-column align-items-center">
+                                <img width="100px" src='@Url.Content("~/images/pokeball.png")' style="opacity: 0.2;" />
+                                <img width="100px" src="@(pokemon.Species.SpriteUrl)" class="position-absolute"/>
+                                <figcaption class="text-capitalize">@counter @(pokemon.Species.Name)</figcaption>
+                            </figure>
+                        </div>
+
+                    counter++;
+                }
+            </div>
+        </div>
+    </div>
 </main>

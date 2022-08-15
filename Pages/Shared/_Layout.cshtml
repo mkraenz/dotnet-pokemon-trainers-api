@@ -4,17 +4,17 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - dotnettest</title>
-    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
-    <link rel="stylesheet" href="~/dotnettest.styles.css" asp-append-version="true" />
+    <title>@ViewData["Title"] - Pokemon Team Manager</title>
+    <link rel="stylesheet" href='@Url.Content("~/lib/bootstrap/dist/css/bootstrap.min.css")' />
+    <link rel="stylesheet" href=' @Url.Content("~/css/site.css")' asp-append-version="true" />
+    <link rel="stylesheet" href='@Url.Content("~/dotnettest.styles.css")' asp-append-version="true" />
 </head>
 
 <body>
     <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
             <div class="container">
-                <a class="navbar-brand" asp-area="" asp-page="/Index">dotnettest</a>
+                <a class="navbar-brand" asp-area="" asp-page="/Index">Pokemon Team Manager</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse"
                     aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
@@ -40,13 +40,14 @@
 
     <footer class="border-top footer text-muted">
         <div class="container">
-            &copy; 2022 - Pokemon Team Manager - <a asp-area="" asp-page="/Privacy">Privacy</a> - Pokémon is &copy; of Nintendo, 1995-2021
+            &copy; 2022 - Pokemon Team Manager - <a asp-area="" asp-page="/Privacy">Privacy</a> - Pokémon is &copy; of
+            Nintendo, 1995-2021
         </div>
     </footer>
 
-    <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="~/js/site.js" asp-append-version="true"></script>
+    <script src='@Url.Content("~/lib/jquery/dist/jquery.min.js")'></script>
+    <script src='@Url.Content("~/lib/bootstrap/dist/js/bootstrap.bundle.min.js")'></script>
+    <script src='@Url.Content("~/js/site.js")' asp-append-version="true"></script>
 
     @await RenderSectionAsync("Scripts", required: false)
 </body>

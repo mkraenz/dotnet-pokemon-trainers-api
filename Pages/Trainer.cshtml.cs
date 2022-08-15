@@ -14,6 +14,7 @@ namespace dotnettest.Pages
 
         public Trainer? Trainer { get; set; }
         public Team? Team { get; set; }
+        public ICollection<m.Pokemon> Pokemons { get; set; } = new List<m.Pokemon>();
 
         public TrainerModel(ILogger<TrainerModel> logger, TrainerService trainers)
         {
@@ -32,6 +33,7 @@ namespace dotnettest.Pages
             {
                 return;
             }
+            Pokemons = Trainer.Pokemons;
 
             // // TODO use the actual team
             List<m.Pokemon> pokemons = Trainer.Pokemons.Take(6).ToList();
