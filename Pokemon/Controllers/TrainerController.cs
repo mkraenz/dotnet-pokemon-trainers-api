@@ -1,3 +1,4 @@
+using dotnettest.Pokemon.Dtos;
 using dotnettest.Pokemon.Models;
 using dotnettest.Pokemon.Services;
 
@@ -30,19 +31,14 @@ namespace dotnettest.Pokemon.Controllers
         }
 
         [HttpPost]
-        public ActionResult<Trainer> Create(Trainer trainer)
+        public ActionResult<Trainer> Create(CreateTrainerDto dto)
         {
-            bool exists = _trainers.Exists(trainer.Id);
-            if (exists)
-            {
-                return Conflict("Id already exists");
-            }
-            bool emailExists = _trainers.EmailExists(trainer.Email);
+            bool emailExists = _trainers.EmailExists(dto.Email);
             if (emailExists)
             {
                 return Conflict("Email already exists");
             }
-            Trainer created = _trainers.Create(trainer);
+            Trainer created = _trainers.Create(Trainer.From(dto));
             return created;
         }
     }

@@ -2,11 +2,11 @@ namespace dotnettest.Pokemon.Models
 {
     public class Team
     {
-        public Species? First { get; set; }
-        public Species? Second { get; set; }
-        public Species? Third { get; set; }
-        public Species? Fourth { get; set; }
-        public Species? Fifth { get; set; }
-        public Species? Sixth { get; set; }
+        public Pokemon? First { get; set; }
+        public Pokemon? Second { get; set; }
+        public Pokemon? Third { get; set; }
+        public Pokemon? Fourth { get; set; }
+        public Pokemon? Fifth { get; set; }
+        public Pokemon? Sixth { get; set; }
     }
 }

@@ -1,29 +1,40 @@
-using dotnettest.Pokemon.Data;
 using dotnettest.Pokemon.Models;
+using dotnettest.Pokemon.Services;
 
 using Microsoft.AspNetCore.Mvc.RazorPages;
+
+using m = dotnettest.Pokemon.Models;
 
 namespace dotnettest.Pages
 {
     public class TrainerModel : PageModel
     {
         private readonly ILogger<TrainerModel> _logger;
-        private readonly PokemonContext _context;
+        private readonly TrainerService _trainers;
 
         public Trainer? Trainer { get; set; }
         public Team? Team { get; set; }
 
-        public TrainerModel(ILogger<TrainerModel> logger, PokemonContext context)
+        public TrainerModel(ILogger<TrainerModel> logger, TrainerService trainers)
         {
             _logger = logger;
-            _context = context;
+            _trainers = trainers;
         }
 
-        public void OnGet()
+        public void OnGet(Guid? trainerId)
         {
-            Trainer = _context.Trainers.OrderBy(t => t.Name).FirstOrDefault();
-            // TODO use the actual team
-            List<Species> pokemons = _context.Species.Take(6).ToList();
+            if (trainerId is null)
+            {
+                return;
+            }
+            Trainer = _trainers.Get((Guid)trainerId);
+            if (Trainer is null)
+            {
+                return;
+            }
+
+            // // TODO use the actual team
+            List<m.Pokemon> pokemons = Trainer.Pokemons.Take(6).ToList();
             Team = new Team()
             {
                 First = pokemons.ElementAtOrDefault(0),
@@ -33,7 +44,6 @@ namespace dotnettest.Pages
                 Fifth = pokemons.ElementAtOrDefault(4),
                 Sixth = pokemons.ElementAtOrDefault(5),
             };
-            _logger.LogInformation($"trainer {Trainer?.Name}");
         }
     }
 }

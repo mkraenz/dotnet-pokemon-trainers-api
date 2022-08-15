@@ -26,7 +26,9 @@ namespace dotnettest.Pokemon.Services
         public Trainer? Get(Guid id)
         {
             // Note: == works because GUID overloads == operator to use .Equals
-            return _context.Trainers.AsNoTracking().FirstOrDefault(p => p.Id == id);
+#nullable disable warnings
+            return _context.Trainers.Include(t => t.Pokemons).ThenInclude(p => p.Species).AsNoTracking().FirstOrDefault(p => p.Id == id);
+#nullable enable warnings
         }
 
         public Trainer Create(Trainer trainer)

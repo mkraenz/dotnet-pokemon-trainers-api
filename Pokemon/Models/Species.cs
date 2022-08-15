@@ -23,7 +23,7 @@ namespace dotnettest.Pokemon.Models
         public string SpriteUrl { get; set; } = "";
 
         [JsonIgnore]
-        public ICollection<Pokemon>? Pokemons { get; set; }
+        public ICollection<Pokemon> Pokemons { get; set; } = default!;
 
         public static Species FromPokeApi(PokeApiPokemon apiPokemon, Uri link)
         {

@@ -1,5 +1,7 @@
 using System.ComponentModel.DataAnnotations;
 
+using dotnettest.Pokemon.Dtos;
+
 using Microsoft.EntityFrameworkCore;
 
 namespace dotnettest.Pokemon.Models
@@ -21,6 +23,15 @@ namespace dotnettest.Pokemon.Models
         [DataType(DataType.DateTime)]
         public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
 
-        public ICollection<Pokemon>? Pokemons { get; set; }
+        public ICollection<Pokemon> Pokemons { get; set; } = default!;
+
+        public static Trainer From(CreateTrainerDto dto)
+        {
+            return new Trainer()
+            {
+                Name = dto.Name,
+                Email = dto.Email
+            };
+        }
     }
 }

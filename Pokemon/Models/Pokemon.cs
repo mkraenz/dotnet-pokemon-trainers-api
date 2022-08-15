@@ -20,6 +20,7 @@ namespace dotnettest.Pokemon.Models
         [JsonIgnore]
         public Trainer Trainer { get; set; } = default!;
 
+        [StringLength(30, MinimumLength = 1)]
         public string? Nickname { get; set; }
 
         [DataType(DataType.DateTime)]
