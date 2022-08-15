@@ -1,4 +1,5 @@
 using System.ComponentModel.DataAnnotations;
+using System.Text.Json.Serialization;
 
 namespace dotnettest.Pokemon.Models
 {
@@ -6,15 +7,18 @@ namespace dotnettest.Pokemon.Models
     {
         public Guid Id { get; set; } = Guid.NewGuid();
 
+        [Required]
         public int SpeciesId { get; set; }
+        [JsonIgnore]
         public Species Species { get; set; } = default!;
 
         [Required]
         [Range(1, 100)]
         public int Level { get; set; } = 1;
 
+        [Required]
         public Guid TrainerId { get; set; }
-        // TODO something is still wrong when creating a 2nd pokemon for a trainer
+        [JsonIgnore]
         public Trainer Trainer { get; set; } = default!;
 
         [StringLength(30, MinimumLength = 1)]
