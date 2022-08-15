@@ -24,6 +24,7 @@ namespace dotnettest.Pokemon.Models
         public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
 
         public ICollection<Pokemon> Pokemons { get; set; } = default!;
+        public ICollection<Team> Teams { get; set; } = default!;
 
         public static Trainer From(CreateTrainerDto dto)
         {

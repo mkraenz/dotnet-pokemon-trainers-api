@@ -27,7 +27,7 @@ namespace dotnettest.Pokemon.Controllers
         public ActionResult<Trainer> Get(Guid id)
         {
             Trainer? trainer = _trainers.Get(id);
-            return trainer is not null ? (ActionResult<Trainer>)trainer : (ActionResult<Trainer>)NotFound();
+            return trainer is not null ? trainer : NotFound();
         }
 
         [HttpPost]

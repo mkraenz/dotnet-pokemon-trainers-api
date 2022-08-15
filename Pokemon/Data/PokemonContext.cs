@@ -12,6 +12,7 @@ namespace dotnettest.Pokemon.Data
         public DbSet<Species> Species => Set<Species>();
         public DbSet<m.Pokemon> Pokemons => Set<m.Pokemon>();
         public DbSet<Trainer> Trainers => Set<Trainer>();
+        public DbSet<Team> Teams => Set<Team>();
 
         protected readonly IConfiguration _configuration;
 

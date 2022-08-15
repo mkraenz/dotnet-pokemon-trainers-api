@@ -9,13 +9,11 @@ namespace dotnettest.Pokemon.Models
     {
         public Guid Id { get; set; } = Guid.NewGuid();
 
-        [Required]
         public int SpeciesId { get; set; }
         public Species Species { get; set; } = default!;
 
         public int Level { get; set; } = 1;
 
-        [Required]
         public Guid TrainerId { get; set; }
         [JsonIgnore]
         public Trainer Trainer { get; set; } = default!;
@@ -29,6 +27,9 @@ namespace dotnettest.Pokemon.Models
         [DataType(DataType.DateTime)]
         public DateTime UpdatedAt { get; set; } = DateTime.UtcNow;
 
+        [JsonIgnore]
+        public ICollection<Team> Teams { get; set; } = default!;
+
         public static Pokemon FromDto(CreatePokemonDto dto)
         {
             return new()
@@ -39,5 +40,6 @@ namespace dotnettest.Pokemon.Models
                 Nickname = dto.Nickname
             };
         }
+
     }
 }

@@ -36,15 +36,15 @@ namespace dotnettest.Pages
             Pokemons = Trainer.Pokemons;
 
             // // TODO use the actual team
-            List<m.Pokemon> pokemons = Trainer.Pokemons.Take(6).ToList();
+            _ = Trainer.Pokemons.Take(6).ToList();
             Team = new Team()
             {
-                First = pokemons.ElementAtOrDefault(0),
-                Second = pokemons.ElementAtOrDefault(1),
-                Third = pokemons.ElementAtOrDefault(2),
-                Fourth = pokemons.ElementAtOrDefault(3),
-                Fifth = pokemons.ElementAtOrDefault(4),
-                Sixth = pokemons.ElementAtOrDefault(5),
+                // First = pokemons.ElementAtOrDefault(0),
+                // Second = pokemons.ElementAtOrDefault(1),
+                // Third = pokemons.ElementAtOrDefault(2),
+                // Fourth = pokemons.ElementAtOrDefault(3),
+                // Fifth = pokemons.ElementAtOrDefault(4),
+                // Sixth = pokemons.ElementAtOrDefault(5),
             };
         }
     }
