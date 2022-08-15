@@ -29,16 +29,16 @@ namespace dotnettest.Pokemon.PokeApi
         public string Name { get; set; } = "";
 
         [JsonPropertyName("url")]
-        public Uri? Url { get; set; }
+        public string Url { get; set; } = "";
     }
 
     public partial class Sprites
     {
         [JsonPropertyName("back_default")]
-        public string? BackDefault { get; set; }
+        public string BackDefault { get; set; } = "";
 
         [JsonPropertyName("front_default")]
-        public string? FrontDefault { get; set; }
+        public string FrontDefault { get; set; } = "";
     }
 
     public partial class TypeElement
