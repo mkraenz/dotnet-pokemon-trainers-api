@@ -1,3 +1,4 @@
+using dotnettest.Pokemon.Controllers;
 using dotnettest.Pokemon.Data;
 using dotnettest.Pokemon.Models;
 using dotnettest.Pokemon.PokeApi;
@@ -21,7 +22,8 @@ builder.Services
     .AddScoped<ICache<Species>, SpeciesCacheService>()
     .AddScoped<SpeciesService>()
     .AddScoped<TeamService>()
-    .AddScoped<TrainerService>();
+    .AddScoped<TrainerService>()
+    .AddScoped<TeamController>();
 
 builder.Services.AddControllers();
 builder.Services.AddRazorPages();
