@@ -1,10 +1,9 @@
-
-using dotnettest.Pokemon.Data;
 using dotnettest.Pokemon.Dtos;
+using dotnettest.Pokemon.Exceptions;
 using dotnettest.Pokemon.Models;
+using dotnettest.Pokemon.Services;
 
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 
 namespace dotnettest.Pokemon.Controllers
 {
@@ -12,24 +11,23 @@ namespace dotnettest.Pokemon.Controllers
     [Route("/api/teams")]
     public class TeamController : ControllerBase
     {
-        private readonly PokemonContext _context;
+        private readonly TeamService _teams;
 
-        // TODO move context to service
-        public TeamController(PokemonContext context)
+        public TeamController(TeamService teams)
         {
-            _context = context;
+            _teams = teams;
         }
 
         [HttpGet]
         public IEnumerable<Team> GetAll()
         {
-            return _context.Teams.AsNoTracking().ToList();
+            return _teams.GetAll();
         }
 
         [HttpGet("{id}")]
         public ActionResult<Team> Get(Guid id)
         {
-            Team? team = _context.Teams.Include(t => t.Members).AsNoTracking().FirstOrDefault(t => t.Id == id);
+            Team? team = _teams.Get(id);
             return team is null ? NotFound() : team;
         }
 
@@ -37,26 +35,7 @@ namespace dotnettest.Pokemon.Controllers
         public ActionResult<Team> Create(CreateTeamDto dto)
         {
             Team team = Team.From(dto);
-            _ = _context.Teams.Add(team);
-            _ = _context.SaveChanges();
-            return team;
-        }
-
-        // TODO make this more RESTy
-        [HttpPut("{id}/setFirst")]
-        public ActionResult<Team> SetFirst(Guid id, Guid pokemonId)
-        {
-            // Team? team = _context.Teams.Include(t => t.Trainer).ThenInclude(tr => tr.Pokemons).AsNoTracking().FirstOrDefault(t => t.Id == id);
-            // NOTE: since we want to change the entity here, we _must not_ use AsNoTracking. That would prevent any updates.
-            Team? team = _context.Teams.Include(t => t.Members).FirstOrDefault(t => t.Id == id);
-            Models.Pokemon? pokemon = _context.Pokemons.Include(p => p.Species).FirstOrDefault(p => p.Id == pokemonId);
-            if (team is null || pokemon is null || team.TrainerId != pokemon.TrainerId)
-            {
-                return NotFound();
-            }
-            team.Members.Add(pokemon);
-            _ = _context.SaveChanges();
-            return team;
+            return _teams.Create(team);
         }
 
         [HttpPut("{id}")]
@@ -64,20 +43,29 @@ namespace dotnettest.Pokemon.Controllers
         {
             if (!dto.HasUniqueIds())
             {
-                return BadRequest("pokemon ids must be unique. You cannot have the same pokemon in a team twice.");
+                return BadRequest("Pokemon ids must be unique. You cannot have the same pokemon in a team twice.");
             }
-            // TODO how can we track the position?
-            Team? team = _context.Teams.Include(t => t.Members).FirstOrDefault(t => t.Id == id);
-            List<Models.Pokemon> pokemons = _context.Pokemons.Where(p => dto.PokemonsAsList.Contains(p.Id)).ToList();
-            bool allPokemonsExist = pokemons.Count == dto.PokemonsAsList.Count;
-            if (team is null || !allPokemonsExist)
+            try
             {
-                return NotFound();
+                return _teams.Update(id, dto);
             }
-            team.Members = pokemons;
-            team.Name = dto.Name;
-            _ = _context.SaveChanges();
-            return team;
+            catch (NotFoundException)
+            {
+                return NotFound("the Team or one of the Pokemons were not found.");
+            }
+        }
+
+        [HttpDelete("{id}")]
+        public ActionResult Delete(Guid id)
+        {
+            Team? team = _teams.Get(id);
+            if (team is null)
+            {
+                return NotFound("The Team was not found.");
+            }
+
+            _teams.Delete(team);
+            return NoContent();
         }
     }
 }

@@ -109,3 +109,6 @@ Content-Type: application/json
   "fifthPokemonId": null,
   "sixthPokemonId": null
 }
+### Delete team
+
+DELETE https://localhost:7132/api/teams/63b2b2a2-6e0c-446d-9166-91401fe2f5ac	

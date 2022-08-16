@@ -16,10 +16,12 @@ builder.Services.AddHttpClient();
 builder.Services.AddStackExchangeRedisCache(options => options.Configuration = configuration["RedisCacheUrl"]);
 builder.Services.AddDbContext<PokemonContext>();
 
-builder.Services.AddScoped<IPokeApi, PokeApiService>();
-builder.Services.AddScoped<ICache<Species>, SpeciesCacheService>();
-builder.Services.AddScoped<SpeciesService>();
-builder.Services.AddScoped<TrainerService>();
+builder.Services
+    .AddScoped<IPokeApi, PokeApiService>()
+    .AddScoped<ICache<Species>, SpeciesCacheService>()
+    .AddScoped<SpeciesService>()
+    .AddScoped<TeamService>()
+    .AddScoped<TrainerService>();
 
 builder.Services.AddControllers();
 builder.Services.AddRazorPages();
