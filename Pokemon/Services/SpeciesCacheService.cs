@@ -1,11 +1,9 @@
 using System.Text;
-using System.Text.Json.Serialization;
+using System.Text.Json;
 
 using dotnettest.Pokemon.Models;
 
 using Microsoft.Extensions.Caching.Distributed;
-
-using Newtonsoft.Json;
 
 namespace dotnettest.Pokemon.Services
 {
@@ -33,12 +31,12 @@ namespace dotnettest.Pokemon.Services
 
             _logger.LogInformation("Hit", new { cacheKey });
             string species = Encoding.UTF8.GetString(speciesRaw);
-            return JsonConvert.DeserializeObject<Species>(species);
+            return JsonSerializer.Deserialize<Species>(species);
         }
 
         public async Task Set(string cacheKey, Species pokemon)
         {
-            byte[] speciesForCache = Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(pokemon));
+            byte[] speciesForCache = Encoding.UTF8.GetBytes(JsonSerializer.Serialize(pokemon));
             await _cache.SetAsync(cacheKey, speciesForCache);
         }
 
