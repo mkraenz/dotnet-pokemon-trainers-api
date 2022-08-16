@@ -58,5 +58,26 @@ namespace dotnettest.Pokemon.Controllers
             _ = _context.SaveChanges();
             return team;
         }
+
+        [HttpPut("{id}")]
+        public ActionResult<Team> Update(Guid id, UpdateTeamDto dto)
+        {
+            if (!dto.HasUniqueIds())
+            {
+                return BadRequest("pokemon ids must be unique. You cannot have the same pokemon in a team twice.");
+            }
+            // TODO how can we track the position?
+            Team? team = _context.Teams.Include(t => t.Members).FirstOrDefault(t => t.Id == id);
+            List<Models.Pokemon> pokemons = _context.Pokemons.Where(p => dto.PokemonsAsList.Contains(p.Id)).ToList();
+            bool allPokemonsExist = pokemons.Count == dto.PokemonsAsList.Count;
+            if (team is null || !allPokemonsExist)
+            {
+                return NotFound();
+            }
+            team.Members = pokemons;
+            team.Name = dto.Name;
+            _ = _context.SaveChanges();
+            return team;
+        }
     }
 }

@@ -94,3 +94,18 @@ PUT https://localhost:7132/api/teams/352baaf2-bf56-4d08-8240-faf72d727be8/setFir
 ### Get team
 
 GET https://localhost:7132/api/teams/352baaf2-bf56-4d08-8240-faf72d727be8
+
+### Update team
+
+PUT https://localhost:7132/api/teams/352baaf2-bf56-4d08-8240-faf72d727be8
+Content-Type: application/json
+
+{
+  "name": "The Awesome Team 5",
+  "firstPokemonId": "d4164781-7dd2-4404-84c7-2c45eec8fb85",
+  "secondPokemonId": null,
+  "thirdPokemonId": "2841325a-d3f9-4b30-97e0-f71365627a44",
+  "fourthPokemonId": null,
+  "fifthPokemonId": null,
+  "sixthPokemonId": null
+}

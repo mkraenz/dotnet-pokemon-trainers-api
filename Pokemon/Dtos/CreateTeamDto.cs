@@ -10,12 +10,5 @@ namespace dotnettest.Pokemon.Dtos
         [Required]
         [StringLength(100, MinimumLength = 1)]
         public string Name { get; set; } = "";
-
-        // public Guid? FirstPokemonId { get; set; }
-        // public Guid? SecondPokemonId { get; set; }
-        // public Guid? ThirdPokemonId { get; set; }
-        // public Guid? FourthPokemonId { get; set; }
-        // public Guid? FifthPokemonId { get; set; }
-        // public Guid? SixthPokemonId { get; set; }
     }
 }
