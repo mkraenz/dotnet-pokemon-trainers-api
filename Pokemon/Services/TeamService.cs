@@ -25,6 +25,7 @@ namespace dotnettest.Pokemon.Services
         {
             return _context.Teams
                 .Include(t => t.Members)
+                .ThenInclude(p => p.Species)
                 .AsNoTracking()
                 .FirstOrDefault(t => t.Id == id);
         }

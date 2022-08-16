@@ -7,7 +7,16 @@
 
 <main class="text-center d-flex flex-column justify-content-between fullwidth">
     <h1 class="display-4 mb-5 mt-5">Welcome back, Trainer @(Model.Trainer?.Name)</h1>
-    <h2 class="mb-4">Your Team</h2>
+    <h2 class="mb-4">
+        @if (Model.Team?.Name == null)
+        {
+            @("Your Team")
+        }
+        else
+        {
+            @(Model.Team?.Name)
+        }
+    </h2>
 
     <div class="container mb-5">
         <div class="row">
@@ -22,7 +31,7 @@
             <div class="col">
                 <figure class="col d-flex flex-column align-items-center position-relative">
                     <img width="100px" src='@Url.Content("~/images/pokeball.png")' style="opacity: 0.2;" />
-                    <img width="100px" src="@(Model.Team?.Second?.Species.SpriteUrl)"  class="position-absolute"/>
+                    <img width="100px" src="@(Model.Team?.Second?.Species.SpriteUrl)" class="position-absolute" />
                     <figcaption class="text-capitalize">@(Model.Team?.Second?.Species.Name)</figcaption>
                 </figure>
             </div>
@@ -30,7 +39,7 @@
             <div class="col">
                 <figure class="col d-flex flex-column align-items-center position-relative">
                     <img width="100px" src='@Url.Content("~/images/pokeball.png")' style="opacity: 0.2;" />
-                    <img width="100px" src="@(Model.Team?.Third?.Species.SpriteUrl)"  class="position-absolute"/>
+                    <img width="100px" src="@(Model.Team?.Third?.Species.SpriteUrl)" class="position-absolute" />
                     <figcaption class="text-capitalize">@(Model.Team?.Third?.Species.Name)</figcaption>
                 </figure>
             </div>
@@ -38,7 +47,7 @@
             <div class="col">
                 <figure class="col d-flex flex-column align-items-center position-relative">
                     <img width="100px" src='@Url.Content("~/images/pokeball.png")' style="opacity: 0.2;" />
-                    <img width="100px" src="@(Model.Team?.Fourth?.Species.SpriteUrl)"  class="position-absolute"/>
+                    <img width="100px" src="@(Model.Team?.Fourth?.Species.SpriteUrl)" class="position-absolute" />
                     <figcaption class="text-capitalize">@(Model.Team?.Fourth?.Species.Name)</figcaption>
                 </figure>
             </div>
@@ -47,7 +56,7 @@
             <div class="col">
                 <figure class="col d-flex flex-column align-items-center position-relative">
                     <img width="100px" src='@Url.Content("~/images/pokeball.png")' style="opacity: 0.2;" />
-                    <img width="100px" src="@(Model.Team?.Fifth?.Species.SpriteUrl)"  class="position-absolute"/>
+                    <img width="100px" src="@(Model.Team?.Fifth?.Species.SpriteUrl)" class="position-absolute" />
                     <figcaption class="text-capitalize">@(Model.Team?.Fifth?.Species.Name)</figcaption>
                 </figure>
             </div>
@@ -55,7 +64,7 @@
             <div class="col">
                 <figure class="col d-flex flex-column align-items-center position-relative">
                     <img width="100px" src='@Url.Content("~/images/pokeball.png")' style="opacity: 0.2;" />
-                    <img width="100px" src="@(Model.Team?.Sixth?.Species.SpriteUrl)"  class="position-absolute"/>
+                    <img width="100px" src="@(Model.Team?.Sixth?.Species.SpriteUrl)" class="position-absolute" />
                     <figcaption class="text-capitalize">@(Model.Team?.Sixth?.Species.Name)</figcaption>
                 </figure>
             </div>
@@ -70,13 +79,13 @@
                 {
                     @* TODO how to make this more responsive. or at least rows of 6 *@
 
-                        <div class="col">
-                            <figure class="col d-flex flex-column align-items-center">
-                                <img width="100px" src='@Url.Content("~/images/pokeball.png")' style="opacity: 0.2;" />
-                                <img width="100px" src="@(pokemon.Species.SpriteUrl)" class="position-absolute"/>
-                                <figcaption class="text-capitalize">@counter @(pokemon.Species.Name)</figcaption>
-                            </figure>
-                        </div>
+                    <div class="col">
+                        <figure class="col d-flex flex-column align-items-center">
+                            <img width="100px" src='@Url.Content("~/images/pokeball.png")' style="opacity: 0.2;" />
+                            <img width="100px" src="@(pokemon.Species.SpriteUrl)" class="position-absolute" />
+                            <figcaption class="text-capitalize">@counter @(pokemon.Species.Name)</figcaption>
+                        </figure>
+                    </div>
 
                     counter++;
                 }

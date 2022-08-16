@@ -9,17 +9,17 @@ namespace dotnettest.Pages
 {
     public class TrainerModel : PageModel
     {
-        private readonly ILogger<TrainerModel> _logger;
         private readonly TrainerService _trainers;
+        private readonly TeamService _teams;
 
         public Trainer? Trainer { get; set; }
         public Team? Team { get; set; }
         public ICollection<m.Pokemon> Pokemons { get; set; } = new List<m.Pokemon>();
 
-        public TrainerModel(ILogger<TrainerModel> logger, TrainerService trainers)
+        public TrainerModel(TrainerService trainers, TeamService teams)
         {
-            _logger = logger;
             _trainers = trainers;
+            _teams = teams;
         }
 
         public void OnGet(Guid? trainerId)
@@ -35,17 +35,19 @@ namespace dotnettest.Pages
             }
             Pokemons = Trainer.Pokemons;
 
-            // // TODO use the actual team
             _ = Trainer.Pokemons.Take(6).ToList();
-            Team = new Team()
-            {
-                // First = pokemons.ElementAtOrDefault(0),
-                // Second = pokemons.ElementAtOrDefault(1),
-                // Third = pokemons.ElementAtOrDefault(2),
-                // Fourth = pokemons.ElementAtOrDefault(3),
-                // Fifth = pokemons.ElementAtOrDefault(4),
-                // Sixth = pokemons.ElementAtOrDefault(5),
-            };
+            Team = GetTeam(Trainer);
+        }
+
+        private Team GetTeam(Trainer trainer)
+        {
+            return trainer.ActiveTeamId is null
+                ? new Team()
+                {
+                    TrainerId = trainer.Id,
+                    Name = "New Team"
+                }
+                : _teams.Get((Guid)trainer.ActiveTeamId)!;
         }
     }
 }
