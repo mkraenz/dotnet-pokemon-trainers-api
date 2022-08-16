@@ -1,4 +1,5 @@
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 using dotnettest.Pokemon.Dtos;
 
@@ -22,6 +23,11 @@ namespace dotnettest.Pokemon.Models
 
         [DataType(DataType.DateTime)]
         public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
+
+
+        public Guid? ActiveTeamId { get; set; }
+        [ForeignKey("ActiveTeamId")]
+        public Team? ActiveTeam { get; set; }
 
         public ICollection<Pokemon> Pokemons { get; set; } = default!;
         public ICollection<Team> Teams { get; set; } = default!;

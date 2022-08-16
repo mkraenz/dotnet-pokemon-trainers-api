@@ -1,4 +1,5 @@
 using dotnettest.Pokemon.Dtos;
+using dotnettest.Pokemon.Exceptions;
 using dotnettest.Pokemon.Models;
 using dotnettest.Pokemon.Services;
 
@@ -40,6 +41,24 @@ namespace dotnettest.Pokemon.Controllers
             }
             Trainer created = _trainers.Create(Trainer.From(dto));
             return created;
+        }
+
+        [HttpPatch("{id}")]
+        public ActionResult Update(Guid id, UpdateTrainerDto dto)
+        {
+            if (!_trainers.Exists(id))
+            {
+                return NotFound();
+            }
+            try
+            {
+                _trainers.Update(id, dto);
+                return NoContent();
+            }
+            catch (NotFoundException)
+            {
+                return NotFound();
+            }
         }
     }
 }

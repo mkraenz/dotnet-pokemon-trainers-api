@@ -112,3 +112,12 @@ Content-Type: application/json
 ### Delete team
 
 DELETE https://localhost:7132/api/teams/63b2b2a2-6e0c-446d-9166-91401fe2f5ac	
+
+### Set active team
+
+PATCH https://localhost:7132/api/trainers/36ff8b22-c4a7-4455-9b76-487817d7e516
+Content-Type: application/json
+
+{
+  "activeTeamId": "352baaf2-bf56-4d08-8240-faf72d727be8"
+}
