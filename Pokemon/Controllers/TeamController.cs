@@ -29,7 +29,7 @@ namespace dotnettest.Pokemon.Controllers
         [HttpGet("{id}")]
         public ActionResult<Team> Get(Guid id)
         {
-            Team? team = _context.Teams.AsNoTracking().FirstOrDefault(t => t.Id == id);
+            Team? team = _context.Teams.Include(t => t.Members).AsNoTracking().FirstOrDefault(t => t.Id == id);
             return team is null ? NotFound() : team;
         }
 
@@ -47,13 +47,13 @@ namespace dotnettest.Pokemon.Controllers
         public ActionResult<Team> SetFirst(Guid id, Guid pokemonId)
         {
             // Team? team = _context.Teams.Include(t => t.Trainer).ThenInclude(tr => tr.Pokemons).AsNoTracking().FirstOrDefault(t => t.Id == id);
-            Team? team = _context.Teams.AsNoTracking().FirstOrDefault(t => t.Id == id);
-            Models.Pokemon? pokemon = _context.Pokemons.AsNoTracking().FirstOrDefault(p => p.Id == pokemonId);
+            // NOTE: since we want to change the entity here, we _must not_ use AsNoTracking. That would prevent any updates.
+            Team? team = _context.Teams.Include(t => t.Members).FirstOrDefault(t => t.Id == id);
+            Models.Pokemon? pokemon = _context.Pokemons.Include(p => p.Species).FirstOrDefault(p => p.Id == pokemonId);
             if (team is null || pokemon is null || team.TrainerId != pokemon.TrainerId)
             {
                 return NotFound();
             }
-            // TODO continue here this is not working!!! How do I add entries to many to many relationships?
             team.Members.Add(pokemon);
             _ = _context.SaveChanges();
             return team;
