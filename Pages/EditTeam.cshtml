@@ -104,14 +104,14 @@
 
             <div class="form-group mb-4">
                 <input type="submit" value="Save" class="btn btn-primary" />
+                <a asp-page="./trainer" asp-route-trainerId="@(Model.TrainerId)">
+                    <button class="btn btn-outline-secondary">Cancel</button>
+                </a>
             </div>
         </form>
     </div>
 </div>
 
-<div>
-    <a asp-page="Index">Back to List</a>
-</div>
 
 @section Scripts {
 @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
