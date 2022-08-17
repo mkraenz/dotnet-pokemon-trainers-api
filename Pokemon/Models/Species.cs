@@ -1,8 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 using System.Text.Json.Serialization;
 
-using dotnettest.Pokemon.PokeApi;
-
 namespace dotnettest.Pokemon.Models
 {
     public class Species
@@ -24,19 +22,5 @@ namespace dotnettest.Pokemon.Models
 
         [JsonIgnore]
         public ICollection<Pokemon> Pokemons { get; set; } = default!;
-
-        public static Species FromPokeApi(PokeApiPokemon apiPokemon, Uri link)
-        {
-            Species species = new()
-            {
-                Name = apiPokemon.Name,
-                Id = apiPokemon.Id,
-                Link = link.ToString(),
-                Type = apiPokemon.Types.First().Type.Name,
-                SpriteUrl = apiPokemon.Sprites.FrontDefault.ToString(),
-            };
-            return species;
-        }
-
     }
 }

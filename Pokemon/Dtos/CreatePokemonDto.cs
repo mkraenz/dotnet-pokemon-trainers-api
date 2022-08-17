@@ -1,5 +1,7 @@
 using System.ComponentModel.DataAnnotations;
 
+using m = dotnettest.Pokemon.Models;
+
 namespace dotnettest.Pokemon.Dtos
 {
     public class CreatePokemonDto
@@ -13,5 +15,16 @@ namespace dotnettest.Pokemon.Dtos
 
         [StringLength(30, MinimumLength = 1)]
         public string? Nickname { get; set; }
+
+        public static m.Pokemon ToEntity(CreatePokemonDto dto)
+        {
+            return new()
+            {
+                Level = dto.Level,
+                SpeciesId = dto.SpeciesId,
+                TrainerId = dto.TrainerId,
+                Nickname = dto.Nickname
+            };
+        }
     }
 }

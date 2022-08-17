@@ -34,7 +34,7 @@ namespace dotnettest.Pokemon.Controllers
         [HttpPost]
         public ActionResult<Team> Create(CreateTeamDto dto)
         {
-            Team team = Team.From(dto);
+            Team team = CreateTeamDto.ToEntity(dto);
             return _teams.Create(team);
         }
 

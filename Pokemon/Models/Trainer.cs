@@ -1,8 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-using dotnettest.Pokemon.Dtos;
-
 using Microsoft.EntityFrameworkCore;
 
 namespace dotnettest.Pokemon.Models
@@ -31,14 +29,5 @@ namespace dotnettest.Pokemon.Models
 
         public ICollection<Pokemon> Pokemons { get; set; } = default!;
         public ICollection<Team> Teams { get; set; } = default!;
-
-        public static Trainer From(CreateTrainerDto dto)
-        {
-            return new Trainer()
-            {
-                Name = dto.Name,
-                Email = dto.Email
-            };
-        }
     }
 }

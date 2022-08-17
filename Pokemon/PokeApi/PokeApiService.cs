@@ -17,8 +17,8 @@ namespace dotnettest.Pokemon.PokeApi
             Uri uri = new($"https://pokeapi.co/api/v2/pokemon/{id}");
             PokeApiPokemon? apiPokemon = await _httpClient.GetFromJsonAsync<PokeApiPokemon>(uri);
             return apiPokemon is null
-                ? throw new InvalidOperationException($"Pokemon with id {id} could not be fetched from PokeApi")
-                : Models.Species.FromPokeApi(apiPokemon, uri);
+                ? throw new InvalidOperationException($"The Pokemon with id {id} could not be fetched from PokeApi.")
+                : PokeApiPokemon.ToSpecies(apiPokemon, uri);
         }
 
     }

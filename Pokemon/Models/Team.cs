@@ -20,15 +20,5 @@ namespace dotnettest.Pokemon.Models
         public Pokemon? Fourth => Members.ElementAtOrDefault(3);
         public Pokemon? Fifth => Members.ElementAtOrDefault(4);
         public Pokemon? Sixth => Members.ElementAtOrDefault(5);
-
-
-        public static Team From(CreateTeamDto dto)
-        {
-            return new Team()
-            {
-                Name = dto.Name,
-                TrainerId = dto.TrainerId,
-            };
-        }
     }
 }

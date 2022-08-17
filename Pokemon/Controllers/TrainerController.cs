@@ -39,7 +39,7 @@ namespace dotnettest.Pokemon.Controllers
             {
                 return Conflict("Email already exists");
             }
-            Trainer created = _trainers.Create(Trainer.From(dto));
+            Trainer created = _trainers.Create(CreateTrainerDto.ToEntity(dto));
             return created;
         }
 

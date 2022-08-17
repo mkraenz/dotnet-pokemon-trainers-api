@@ -1,8 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 using System.Text.Json.Serialization;
 
-using dotnettest.Pokemon.Dtos;
-
 namespace dotnettest.Pokemon.Models
 {
     public class Pokemon
@@ -29,17 +27,5 @@ namespace dotnettest.Pokemon.Models
 
         [JsonIgnore]
         public ICollection<Team> Teams { get; set; } = default!;
-
-        public static Pokemon FromDto(CreatePokemonDto dto)
-        {
-            return new()
-            {
-                Level = dto.Level,
-                SpeciesId = dto.SpeciesId,
-                TrainerId = dto.TrainerId,
-                Nickname = dto.Nickname
-            };
-        }
-
     }
 }

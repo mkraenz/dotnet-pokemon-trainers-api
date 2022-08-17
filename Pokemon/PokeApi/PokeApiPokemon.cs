@@ -1,5 +1,7 @@
 using System.Text.Json.Serialization;
 
+using dotnettest.Pokemon.Models;
+
 namespace dotnettest.Pokemon.PokeApi
 {
     public partial class PokeApiPokemon
@@ -21,6 +23,20 @@ namespace dotnettest.Pokemon.PokeApi
 
         [JsonPropertyName("weight")]
         public int Weight { get; set; }
+
+
+        public static Species ToSpecies(PokeApiPokemon apiPokemon, Uri link)
+        {
+            Species species = new()
+            {
+                Name = apiPokemon.Name,
+                Id = apiPokemon.Id,
+                Link = link.ToString(),
+                Type = apiPokemon.Types.First().Type.Name,
+                SpriteUrl = apiPokemon.Sprites.FrontDefault.ToString(),
+            };
+            return species;
+        }
     }
 
     public partial class PokeApiSpecies

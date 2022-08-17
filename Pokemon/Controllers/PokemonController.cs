@@ -47,7 +47,8 @@ namespace dotnettest.Pokemon.Controllers
             {
                 return NotFound("Species or Trainer not found");
             }
-            m.Pokemon pokemon = m.Pokemon.FromDto(dto);
+
+            m.Pokemon pokemon = CreatePokemonDto.ToEntity(dto);
             _ = _context.Pokemons.Add(pokemon);
             _ = _context.SaveChanges();
 
