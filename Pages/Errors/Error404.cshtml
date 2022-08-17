@@ -1,0 +1,15 @@
+@page
+
+<h1 class="text-danger">Error 404 Not Found</h1>
+<h2 class="text-danger mb-5">The page you where looking for does not exist.</h2>
+
+<div class="container d-flex mb-4 flex-column">
+
+    <a href='@Url.Page("Index")' class="mb-4">
+        <button type="button" class="btn btn-primary">Back to Home</button>
+    </a>
+    <button style="width: fit-content;" onclick="history.back()" class="btn btn-secondary">Back to previous
+        page</button>
+</div>
+
+<img src="https://http.cat/404" width="col-4"></img>

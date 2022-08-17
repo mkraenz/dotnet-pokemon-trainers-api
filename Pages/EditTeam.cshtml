@@ -1,0 +1,118 @@
+@page "{id:Guid}"
+@model dotnettest.Pages.EditTeam
+
+@{
+    ViewData["Title"] = "Edit Team";
+    var firstPokemon = Model.Pokemons.First(p => p.Id == Model.Team.FirstPokemonId);
+    var secondPokemon = Model.Pokemons.First(p => p.Id == Model.Team.SecondPokemonId);
+    var thirdPokemon = Model.Pokemons.First(p => p.Id == Model.Team.ThirdPokemonId);
+    var fourthPokemon = Model.Pokemons.First(p => p.Id == Model.Team.FourthPokemonId);
+    var fifthPokemon = Model.Pokemons.First(p => p.Id == Model.Team.FifthPokemonId);
+    var sixthPokemon = Model.Pokemons.First(p => p.Id == Model.Team.SixthPokemonId);
+}
+
+
+<h1>Edit Team</h1>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger mb-4"></div>
+            <div class="form-group mb-4">
+                <label asp-for="@(Model.Team.Name)" class="control-label"></label>
+                <input asp-for="@(Model.Team.Name)" class="form-control" />
+                <span asp-validation-for="@(Model.Team.Name)" class="text-danger"></span>
+            </div>
+
+            <div class="form group mb-4">
+                <label asp-for="@(Model.Team.FirstPokemonId)" class="control-label">Position 1</label>
+                <select asp-for="@(Model.Team.FirstPokemonId)" class="form-select text-capitalize"
+                    aria-label="First Team Member Select">
+                    @foreach (var pokemon in Model.Pokemons)
+                    {
+                        <option value="@(pokemon.Id)" class="text-capitalize">
+                            @(pokemon.Species.Name) (Lv @(pokemon.Level))
+                        </option>
+                    }
+                </select>
+            </div>
+
+            <div class="form group mb-4">
+                <label asp-for="@(Model.Team.SecondPokemonId)" class="control-label">Position 2</label>
+                <select asp-for="@(Model.Team.SecondPokemonId)" class="form-select text-capitalize"
+                    aria-label="First Team Member Select">
+                    @foreach (var pokemon in Model.Pokemons)
+                    {
+                        <option value="@(pokemon.Id)" class="text-capitalize">
+                            @(pokemon.Species.Name) (Lv @(pokemon.Level))
+                        </option>
+                    }
+                </select>
+            </div>
+
+            <div class="form group mb-4">
+                <label asp-for="@(Model.Team.ThirdPokemonId)" class="control-label">Position 3</label>
+                <select asp-for="@(Model.Team.ThirdPokemonId)" class="form-select text-capitalize"
+                    aria-label="First Team Member Select">
+                    @foreach (var pokemon in Model.Pokemons)
+                    {
+                        <option value="@(pokemon.Id)" class="text-capitalize">
+                            @(pokemon.Species.Name) (Lv @(pokemon.Level))
+                        </option>
+                    }
+                </select>
+            </div>
+
+            <div class="form group mb-4">
+                <label asp-for="@(Model.Team.FourthPokemonId)" class="control-label">Position 4</label>
+                <select asp-for="@(Model.Team.FourthPokemonId)" class="form-select text-capitalize"
+                    aria-label="First Team Member Select">
+                    @foreach (var pokemon in Model.Pokemons)
+                    {
+                        <option value="@(pokemon.Id)" class="text-capitalize">
+                            @(pokemon.Species.Name) (Lv @(pokemon.Level))
+                        </option>
+                    }
+                </select>
+            </div>
+
+            <div class="form group mb-4">
+                <label asp-for="@(Model.Team.FifthPokemonId)" class="control-label">Position 5</label>
+                <select asp-for="@(Model.Team.FifthPokemonId)" class="form-select text-capitalize"
+                    aria-label="First Team Member Select">
+                    @foreach (var pokemon in Model.Pokemons)
+                    {
+                        <option value="@(pokemon.Id)" class="text-capitalize">
+                            @(pokemon.Species.Name) (Lv @(pokemon.Level))
+                        </option>
+                    }
+                </select>
+            </div>
+
+            <div class="form group mb-4">
+                <label asp-for="@(Model.Team.SixthPokemonId)" class="control-label">Position 6</label>
+                <select asp-for="@(Model.Team.SixthPokemonId)" class="form-select text-capitalize"
+                    aria-label="First Team Member Select">
+                    @foreach (var pokemon in Model.Pokemons)
+                    {
+                        <option value="@(pokemon.Id)" class="text-capitalize">
+                            @(pokemon.Species.Name) (Lv @(pokemon.Level))
+                        </option>
+                    }
+                </select>
+            </div>
+
+            <div class="form-group mb-4">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-page="Index">Back to List</a>
+</div>
+
+@section Scripts {
+@{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
