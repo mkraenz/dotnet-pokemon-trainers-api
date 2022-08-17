@@ -3,12 +3,12 @@
 
 @{
     ViewData["Title"] = "Edit Team";
-    var firstPokemon = Model.Pokemons.First(p => p.Id == Model.Team.FirstPokemonId);
-    var secondPokemon = Model.Pokemons.First(p => p.Id == Model.Team.SecondPokemonId);
-    var thirdPokemon = Model.Pokemons.First(p => p.Id == Model.Team.ThirdPokemonId);
-    var fourthPokemon = Model.Pokemons.First(p => p.Id == Model.Team.FourthPokemonId);
-    var fifthPokemon = Model.Pokemons.First(p => p.Id == Model.Team.FifthPokemonId);
-    var sixthPokemon = Model.Pokemons.First(p => p.Id == Model.Team.SixthPokemonId);
+    var firstPokemon = Model.Pokemons.FirstOrDefault(p => p.Id == Model.Team.FirstPokemonId);
+    var secondPokemon = Model.Pokemons.FirstOrDefault(p => p.Id == Model.Team.SecondPokemonId);
+    var thirdPokemon = Model.Pokemons.FirstOrDefault(p => p.Id == Model.Team.ThirdPokemonId);
+    var fourthPokemon = Model.Pokemons.FirstOrDefault(p => p.Id == Model.Team.FourthPokemonId);
+    var fifthPokemon = Model.Pokemons.FirstOrDefault(p => p.Id == Model.Team.FifthPokemonId);
+    var sixthPokemon = Model.Pokemons.FirstOrDefault(p => p.Id == Model.Team.SixthPokemonId);
 }
 
 
@@ -26,8 +26,16 @@
 
             <div class="form group mb-4">
                 <label asp-for="@(Model.Team.FirstPokemonId)" class="control-label">Position 1</label>
-                <select asp-for="@(Model.Team.FirstPokemonId)" class="form-select text-capitalize"
-                    aria-label="First Team Member Select">
+                <select asp-for="@(Model.Team.FirstPokemonId)" class="form-select text-capitalize">
+                    @if(firstPokemon is not null)
+                    {
+                        <option value="@(firstPokemon.Id)" class="text-capitalize" selected="selected">@firstPokemon.Species.Name</option>
+                    }
+                    else
+                    {
+                        <option disabled value="" selected="selected">Select a Pokemon</option>
+                    }
+
                     @foreach (var pokemon in Model.Pokemons)
                     {
                         <option value="@(pokemon.Id)" class="text-capitalize">
@@ -39,8 +47,16 @@
 
             <div class="form group mb-4">
                 <label asp-for="@(Model.Team.SecondPokemonId)" class="control-label">Position 2</label>
-                <select asp-for="@(Model.Team.SecondPokemonId)" class="form-select text-capitalize"
-                    aria-label="First Team Member Select">
+                <select asp-for="@(Model.Team.SecondPokemonId)" class="form-select text-capitalize">
+                    @if(secondPokemon is not null)
+                    {
+                        <option value="@(secondPokemon.Id)" class="text-capitalize" selected="selected">@secondPokemon.Species.Name</option>
+                    }
+                    else
+                    {
+                        <option disabled value="" selected="selected">Select a Pokemon</option>
+                    }
+
                     @foreach (var pokemon in Model.Pokemons)
                     {
                         <option value="@(pokemon.Id)" class="text-capitalize">
@@ -52,8 +68,15 @@
 
             <div class="form group mb-4">
                 <label asp-for="@(Model.Team.ThirdPokemonId)" class="control-label">Position 3</label>
-                <select asp-for="@(Model.Team.ThirdPokemonId)" class="form-select text-capitalize"
-                    aria-label="First Team Member Select">
+                <select asp-for="@(Model.Team.ThirdPokemonId)" class="form-select text-capitalize">
+                    @if(thirdPokemon is not null)
+                    {
+                        <option value="@(thirdPokemon.Id)" class="text-capitalize" selected="selected">@thirdPokemon.Species.Name</option>
+                    }
+                    else
+                    {
+                        <option disabled value="" selected="selected">Select a Pokemon</option>
+                    }
                     @foreach (var pokemon in Model.Pokemons)
                     {
                         <option value="@(pokemon.Id)" class="text-capitalize">
@@ -65,8 +88,15 @@
 
             <div class="form group mb-4">
                 <label asp-for="@(Model.Team.FourthPokemonId)" class="control-label">Position 4</label>
-                <select asp-for="@(Model.Team.FourthPokemonId)" class="form-select text-capitalize"
-                    aria-label="First Team Member Select">
+                <select asp-for="@(Model.Team.FourthPokemonId)" class="form-select text-capitalize">
+                    @if(fourthPokemon is not null)
+                    {
+                        <option value="@(fourthPokemon.Id)" class="text-capitalize" selected="selected">@fourthPokemon.Species.Name</option>
+                    }
+                    else
+                    {
+                        <option disabled value="" selected="selected">Select a Pokemon</option>
+                    }
                     @foreach (var pokemon in Model.Pokemons)
                     {
                         <option value="@(pokemon.Id)" class="text-capitalize">
@@ -78,8 +108,16 @@
 
             <div class="form group mb-4">
                 <label asp-for="@(Model.Team.FifthPokemonId)" class="control-label">Position 5</label>
-                <select asp-for="@(Model.Team.FifthPokemonId)" class="form-select text-capitalize"
-                    aria-label="First Team Member Select">
+                <select asp-for="@(Model.Team.FifthPokemonId)" class="form-select text-capitalize">
+                    @if(fifthPokemon is not null)
+                    {
+                        <option value="@(fifthPokemon.Id)" class="text-capitalize" selected="selected">@fifthPokemon.Species.Name</option>
+                    }
+                    else
+                    {
+                        <option disabled value="" selected="selected">Select a Pokemon</option>
+                    }
+
                     @foreach (var pokemon in Model.Pokemons)
                     {
                         <option value="@(pokemon.Id)" class="text-capitalize">
@@ -91,8 +129,16 @@
 
             <div class="form group mb-4">
                 <label asp-for="@(Model.Team.SixthPokemonId)" class="control-label">Position 6</label>
-                <select asp-for="@(Model.Team.SixthPokemonId)" class="form-select text-capitalize"
-                    aria-label="First Team Member Select">
+                <select asp-for="@(Model.Team.SixthPokemonId)" class="form-select text-capitalize">
+                    @if(sixthPokemon is not null)
+                    {
+                        <option value="@(sixthPokemon.Id)" class="text-capitalize" selected="selected">@sixthPokemon.Species.Name</option>
+                    }
+                    else
+                    {
+                        <option disabled value="" selected="selected">Select a Pokemon</option>
+                    }
+
                     @foreach (var pokemon in Model.Pokemons)
                     {
                         <option value="@(pokemon.Id)" class="text-capitalize">
@@ -104,7 +150,7 @@
 
             <div class="form-group mb-4">
                 <input type="submit" value="Save" class="btn btn-primary" />
-                <a asp-page="./trainer" asp-route-trainerId="@(Model.TrainerId)">
+                <a asp-page="/Trainer" asp-route-trainerId="@(Model.TrainerId)">
                     <button class="btn btn-outline-secondary">Cancel</button>
                 </a>
             </div>

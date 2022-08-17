@@ -1,5 +1,5 @@
 @page
-@model dotnettest.Pages.CreateTeam
+@model dotnettest.Pages.Admin.Teams.CreateModel
 
 @{
     ViewData["Title"] = "New Team";
@@ -17,11 +17,19 @@
                 <input asp-for="@(Model.Team.Name)" class="form-control" />
                 <span asp-validation-for="@(Model.Team.Name)" class="text-danger"></span>
             </div>
-            <div class="form-group mb-4">
-                <label asp-for="@(Model.Team.TrainerId)" class="control-label"></label>
-                <input asp-for="@(Model.Team.TrainerId)" class="form-control" />
-                <span asp-validation-for="@(Model.Team.TrainerId)" class="text-danger"></span>
+
+            <div class="form group mb-4">
+                <label asp-for="@(Model.Team.TrainerId)" class="control-label">Trainer</label>
+                <select asp-for="@(Model.Team.TrainerId)" class="form-select" aria-label="Select Trainer">
+                    @foreach (var trainer in Model.Trainers)
+                    {
+                        <option value="@(trainer.Id)">
+                            @(trainer.Name) - @(trainer.Email)
+                        </option>
+                    }
+                </select>
             </div>
+
             <div class="form-group mb-4">
                 <input type="submit" value="Create" class="btn btn-primary" />
             </div>

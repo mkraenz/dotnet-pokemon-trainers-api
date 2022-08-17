@@ -23,6 +23,13 @@ namespace dotnettest.Pokemon.Services
             return _context.Trainers.Include(t => t.Pokemons).ThenInclude(p => p.Species).AsNoTracking().ToList();
         }
 
+        public IEnumerable<Trainer> GetAllWithTeams()
+        {
+            // https://github.com/dotnet/efcore/issues/17212#issuecomment-522188174
+            // in the sql the null is handled properly, thus disabling warning 
+            return _context.Trainers.Include(t => t.Teams).ThenInclude(p => p.Members).ThenInclude(p => p.Species).AsNoTracking().ToList();
+        }
+
         public Trainer? Get(Guid id)
         {
             // Note: == works because GUID overloads == operator to use .Equals

@@ -53,6 +53,7 @@ namespace dotnettest.Pages
                 return RedirectToPage("Errors/Error404");
             }
             TrainerId = trainer.Id;
+            // TODO handle empty pokemons
             Pokemons = trainer.Pokemons;
             return Page();
         }
