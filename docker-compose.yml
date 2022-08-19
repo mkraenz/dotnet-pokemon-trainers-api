@@ -24,24 +24,33 @@ services:
     ports:
       - 6379:6379
 
+  # running on http://localhost:4344/ on host machine
+  # see https://www.keycloak.org/docs/latest/securing_apps/#_javascript_adapter
+  # create new client with RootURL http://localhost:7132, Valid redirect URIs http://localhost:7132/*, Valid post logout redirect URIs http://localhost:7132/*, and Web origins (aka CORS) http://localhost:7132. Then in the Clients -> <yourClient> -> Action (at top right) -> Download adapter config. Copy the json file next to the html file that logs the user in.
+
+  # to setup self-registration (i.e. sign up): Realm Settings -> Login -> User Registration (checked). Ideally also Verify Email (checked), and Forgot password (checked)
+  # also setup an email: Realm Settings -> Email -> fill in info
   keycloak:
-    image: docker.io/bitnami/keycloak:latest
+    image: quay.io/keycloak/keycloak:19.0.1
     ports:
       - 4344:8080
     links:
       - db:database
     environment:
-      DB_VENDOR: POSTGRES
-      KEYCLOAK_DATABASE_HOST: database
-      KEYCLOAK_DATABASE_PORT: 5432
-      # TODO: automatically create db on postgres. Currently, just manually run `CREATE DATABASE "keycloak";` via Adminer -> SQL command
-      KEYCLOAK_DATABASE_NAME: keycloak
-      KEYCLOAK_DATABASE_USER: root
-      KEYCLOAK_DATABASE_PASSWORD: example
-      KEYCLOAK_CREATE_ADMIN_USER: "true"
-      KEYCLOAK_ADMIN_USER: myadmin
-      KEYCLOAK_ADMIN_PASSWORD: Test1234
-      KEYCLOAK_MANAGEMENT_USER: mymanager
-      KEYCLOAK_MANAGEMENT_PASSWORD: Test1234
+      KEYCLOAK_ADMIN: admin
+      KEYCLOAK_ADMIN_PASSWORD: admin
+      # DB_VENDOR: POSTGRES
+      # KEYCLOAK_DATABASE_HOST: database
+      # KEYCLOAK_DATABASE_PORT: 5432
+      # # TODO: automatically create db on postgres. Currently, just manually run `CREATE DATABASE "keycloak";` via Adminer -> SQL command
+      # KEYCLOAK_DATABASE_NAME: keycloak
+      # KEYCLOAK_DATABASE_USER: root
+      # KEYCLOAK_DATABASE_PASSWORD: example
+      # KEYCLOAK_CREATE_ADMIN_USER: "true"
+      # KEYCLOAK_ADMIN_USER: myadmin
+      # KEYCLOAK_ADMIN_PASSWORD: Test1234
+      # KEYCLOAK_MANAGEMENT_USER: mymanager
+      # KEYCLOAK_MANAGEMENT_PASSWORD: Test1234
     depends_on:
       - db
+    command: start-dev

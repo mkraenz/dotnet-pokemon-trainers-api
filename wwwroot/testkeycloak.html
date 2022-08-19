@@ -1,0 +1,70 @@
+<html>
+
+<!-- MAYBE (doesnt seem necessary with newest docker image from quay.io): realm settings -> Security Defenses -> set Content-Security-Policy to  -->
+<!-- frame-src 'self'; frame-ancestors 'self' http://localhost:7132; object-src 'none'; -->
+<!-- where http://localhost:7132 is your client webpage's URL -->
+
+<head>
+    <script src="http://localhost:8080/js/keycloak.js"></script>
+    <script>
+        var keycloak;
+        function initKeycloak() {
+            keycloak = new Keycloak();
+            keycloak.init({ onLoad: 'login-required' }).then(function (authenticated) {
+                console.log(authenticated)
+                if (authenticated) showData();
+                else alert("Not authenticated");
+            }).catch(function (e) {
+                console.log(e)
+                alert('failed to initialize');
+            });
+        }
+
+        function showData() {
+            document.getElementById('authenticated').innerText = keycloak.authenticated;
+            document.getElementById('subject').innerText = keycloak.subject;
+            document.getElementById('idtokenparsed').innerText = JSON.stringify(keycloak.idTokenParsed, null, 2);
+            document.getElementById('idtoken').innerText = keycloak.idToken;
+            document.getElementById('token').innerText = keycloak.token;
+            document.getElementById('tokenParsed').innerText = JSON.stringify(keycloak.tokenParsed, null, 2);
+        }
+
+        function logout() {
+            keycloak.logout();
+        }
+
+        function login() {
+            keycloak.login();
+        }
+
+        function signup() {
+            keycloak.register();
+        }
+    </script>
+</head>
+
+<body onload="initKeycloak()">
+    <!-- your page content goes here -->
+    <p>Hello</p>
+    <h1>Keycloak Demo / Test</h1>
+    <button onclick="showData();">Get Data</button>
+    <button onclick="signup();">Sign Up</button>
+    <button onclick="login();">Login</button>
+    <button onclick="logout();" />Logout</button>
+    <h2>Authenticated</h2>
+    <p id="authenticated">empty</p>
+    <h2>Subject</h2>
+    <p id="subject">empty</p>
+    <h2>idTokenParsed</h2>
+    <pre id="idtokenparsed">empty</pre>
+    <h2>idToken (raw)</h2>
+    <pre id="idtoken">empty</pre>
+    <!-- req.setRequestHeader('Authorization', 'Bearer ' + keycloak.token); -->
+    <h2>token (for Authorization header)</h2>
+    <pre id="token">empty</pre>
+    <h2>tokenParsed</h2>
+    <pre id="tokenParsed">empty</pre>
+
+</body>
+
+</html>

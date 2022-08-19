@@ -1,0 +1,8 @@
+{
+  "realm": "teatime",
+  "auth-server-url": "http://localhost:4344/",
+  "ssl-required": "external",
+  "resource": "dotnet",
+  "public-client": true,
+  "confidential-port": 0
+}
