@@ -40,6 +40,10 @@ dotnet ef database update <previous migration name>
 dotnet ef migrations remove
 ```
 
+### Code Generation
+
+See <https://docs.microsoft.com/en-us/aspnet/core/tutorials/razor-pages/model?view=aspnetcore-6.0&tabs=visual-studio-code#add-a-data-model>
+
 ### Clearing the (useless :) ) redis cache
 
 tl;dr

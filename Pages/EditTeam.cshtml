@@ -1,5 +1,5 @@
 @page "{id:Guid}"
-@model dotnettest.Pages.EditTeam
+@model EditTeamModel
 
 @{
     ViewData["Title"] = "Edit Team";
@@ -10,7 +10,6 @@
     var fifthPokemon = Model.Pokemons.FirstOrDefault(p => p.Id == Model.Team.FifthPokemonId);
     var sixthPokemon = Model.Pokemons.FirstOrDefault(p => p.Id == Model.Team.SixthPokemonId);
 }
-
 
 <h1>Edit Team</h1>
 <hr />
@@ -24,12 +23,14 @@
                 <span asp-validation-for="@(Model.Team.Name)" class="text-danger"></span>
             </div>
 
+            @* TODO see https://docs.microsoft.com/en-us/aspnet/core/mvc/views/razor?view=aspnetcore-6.0#templated-razor-delegates for how to use templates *@
             <div class="form group mb-4">
                 <label asp-for="@(Model.Team.FirstPokemonId)" class="control-label">Position 1</label>
                 <select asp-for="@(Model.Team.FirstPokemonId)" class="form-select text-capitalize">
-                    @if(firstPokemon is not null)
+                    @if (firstPokemon is not null)
                     {
-                        <option value="@(firstPokemon.Id)" class="text-capitalize" selected="selected">@firstPokemon.Species.Name</option>
+                        <option value="@(firstPokemon.Id)" class="text-capitalize" selected="selected">
+                            @firstPokemon.Species.Name</option>
                     }
                     else
                     {
@@ -48,9 +49,10 @@
             <div class="form group mb-4">
                 <label asp-for="@(Model.Team.SecondPokemonId)" class="control-label">Position 2</label>
                 <select asp-for="@(Model.Team.SecondPokemonId)" class="form-select text-capitalize">
-                    @if(secondPokemon is not null)
+                    @if (secondPokemon is not null)
                     {
-                        <option value="@(secondPokemon.Id)" class="text-capitalize" selected="selected">@secondPokemon.Species.Name</option>
+                        <option value="@(secondPokemon.Id)" class="text-capitalize" selected="selected">
+                            @secondPokemon.Species.Name</option>
                     }
                     else
                     {
@@ -69,9 +71,10 @@
             <div class="form group mb-4">
                 <label asp-for="@(Model.Team.ThirdPokemonId)" class="control-label">Position 3</label>
                 <select asp-for="@(Model.Team.ThirdPokemonId)" class="form-select text-capitalize">
-                    @if(thirdPokemon is not null)
+                    @if (thirdPokemon is not null)
                     {
-                        <option value="@(thirdPokemon.Id)" class="text-capitalize" selected="selected">@thirdPokemon.Species.Name</option>
+                        <option value="@(thirdPokemon.Id)" class="text-capitalize" selected="selected">
+                            @thirdPokemon.Species.Name</option>
                     }
                     else
                     {
@@ -89,9 +92,10 @@
             <div class="form group mb-4">
                 <label asp-for="@(Model.Team.FourthPokemonId)" class="control-label">Position 4</label>
                 <select asp-for="@(Model.Team.FourthPokemonId)" class="form-select text-capitalize">
-                    @if(fourthPokemon is not null)
+                    @if (fourthPokemon is not null)
                     {
-                        <option value="@(fourthPokemon.Id)" class="text-capitalize" selected="selected">@fourthPokemon.Species.Name</option>
+                        <option value="@(fourthPokemon.Id)" class="text-capitalize" selected="selected">
+                            @fourthPokemon.Species.Name</option>
                     }
                     else
                     {
@@ -109,9 +113,10 @@
             <div class="form group mb-4">
                 <label asp-for="@(Model.Team.FifthPokemonId)" class="control-label">Position 5</label>
                 <select asp-for="@(Model.Team.FifthPokemonId)" class="form-select text-capitalize">
-                    @if(fifthPokemon is not null)
+                    @if (fifthPokemon is not null)
                     {
-                        <option value="@(fifthPokemon.Id)" class="text-capitalize" selected="selected">@fifthPokemon.Species.Name</option>
+                        <option value="@(fifthPokemon.Id)" class="text-capitalize" selected="selected">
+                            @fifthPokemon.Species.Name</option>
                     }
                     else
                     {
@@ -130,9 +135,10 @@
             <div class="form group mb-4">
                 <label asp-for="@(Model.Team.SixthPokemonId)" class="control-label">Position 6</label>
                 <select asp-for="@(Model.Team.SixthPokemonId)" class="form-select text-capitalize">
-                    @if(sixthPokemon is not null)
+                    @if (sixthPokemon is not null)
                     {
-                        <option value="@(sixthPokemon.Id)" class="text-capitalize" selected="selected">@sixthPokemon.Species.Name</option>
+                        <option value="@(sixthPokemon.Id)" class="text-capitalize" selected="selected">
+                            @sixthPokemon.Species.Name</option>
                     }
                     else
                     {

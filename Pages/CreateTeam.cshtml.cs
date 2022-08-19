@@ -6,11 +6,11 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace dotnettest.Pages
 {
-    public class CreateTeam : PageModel
+    public class CreateTeamModel : PageModel
     {
         private readonly TeamController _teamController;
 
-        public CreateTeam(TeamController teamController)
+        public CreateTeamModel(TeamController teamController)
         {
             _teamController = teamController;
         }

@@ -12,7 +12,7 @@ using m = dotnettest.Pokemon.Models;
 
 namespace dotnettest.Pages
 {
-    public class EditTeam : PageModel
+    public class EditTeamModel : PageModel
     {
 
         [BindProperty]
@@ -28,7 +28,7 @@ namespace dotnettest.Pages
         private readonly TeamController _teamController;
         private readonly TrainerService _trainers;
 
-        public EditTeam(TeamController teamController, TrainerService trainers)
+        public EditTeamModel(TeamController teamController, TrainerService trainers)
         {
             _teamController = teamController;
             _trainers = trainers;
