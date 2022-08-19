@@ -27,6 +27,8 @@ builder.Services
 
 builder.Services.AddControllers();
 builder.Services.AddRazorPages();
+// enable this when editing form views or _layout. Then reload browser manually with F5.
+    // .AddRazorRuntimeCompilation();
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
