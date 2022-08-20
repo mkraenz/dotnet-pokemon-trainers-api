@@ -160,3 +160,11 @@ Content-Type: application/json
 ### shiggy c928be91-bf74-4d60-bec2-bc8bd3b99a14
 ### smettbo 042195be-218a-46f7-a829-b49f870db6df
 ### tauboga 8eb4630d-1e05-407e-8b0c-4eda7b0dd724
+
+### Authenticated user with ID TOken
+GET https://localhost:7132/api/pokemons/
+Authorization: Bearer eyJh...
+
+
+
+
