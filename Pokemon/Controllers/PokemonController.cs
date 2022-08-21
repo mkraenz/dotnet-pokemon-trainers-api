@@ -3,6 +3,7 @@ using dotnettest.Pokemon.Dtos;
 using dotnettest.Pokemon.Models;
 using dotnettest.Pokemon.Services;
 
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -27,19 +28,18 @@ namespace dotnettest.Pokemon.Controllers
             _logger = logger;
         }
 
+        [Authorize]
         [HttpGet]
         public IEnumerable<m.Pokemon> GetAll()
         {
             return _context.Pokemons.Include(p => p.Species).AsNoTracking().ToList();
         }
 
-
+        [Authorize]
         [HttpPost]
         public async Task<ActionResult<m.Pokemon>> CreateAsync(CreatePokemonDto dto)
         {
             _logger.LogInformation($"nickname: {dto.Nickname}, speciesId: {dto.SpeciesId}, trainerId: {dto.TrainerId}, level: {dto.Level}");
-            // TODO this is just a quick-and-dirty implementation for testing.
-            // Move most stuff to service.
             Species? species = await _speciess.GetByIdAsync(dto.SpeciesId);
             Trainer? trainer = _trainers.Get(dto.TrainerId);
 
