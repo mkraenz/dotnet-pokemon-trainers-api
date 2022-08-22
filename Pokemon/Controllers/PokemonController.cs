@@ -13,6 +13,7 @@ namespace dotnettest.Pokemon.Controllers
 {
     [ApiController]
     [Route("api/pokemons")]
+    [Authorize(Roles = "administrator")]
     public class PokemonController : ControllerBase
     {
         private readonly PokemonContext _context;
@@ -28,14 +29,12 @@ namespace dotnettest.Pokemon.Controllers
             _logger = logger;
         }
 
-        [Authorize]
-        [HttpGet]
+
         public IEnumerable<m.Pokemon> GetAll()
         {
             return _context.Pokemons.Include(p => p.Species).AsNoTracking().ToList();
         }
 
-        [Authorize]
         [HttpPost]
         public async Task<ActionResult<m.Pokemon>> CreateAsync(CreatePokemonDto dto)
         {
