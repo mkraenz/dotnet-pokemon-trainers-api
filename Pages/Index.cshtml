@@ -6,9 +6,43 @@
 
 <div class="text-center">
     <h1 class="display-4">Pokemon Team Manager</h1>
-    <a href='@Url.Page("Login")'>
+    @* <a href='@Url.Page("Login")'>
         <button type=" button" class="btn btn-primary">Sign
-            In</button>
-    </a>
-
+        In</button>
+        </a> *@
+    <button class="btn btn-primary" id="login-btn" onclick="login();">Sign
+        In</button>
 </div>
+
+@* https://localhost:7132/ *@
+<script src="http://localhost:4344/js/keycloak.js"></script>
+<script>
+    var keycloak;
+    async function initKeycloak() {
+        keycloak = new Keycloak();
+        try {
+            const authenticated = await keycloak.init('/keycloak.json');
+            if (authenticated) console.log('authenticated. TODO redirect to trainer')
+            else alert("Not authenticated");
+        }
+        catch (e) {
+            console.log(e)
+            alert('failed to initialize');
+        }
+    }
+
+    async function logout() {
+        if (!keycloak) await initKeycloak();
+        keycloak.logout();
+    }
+
+    async function login() {
+        if (!keycloak) await initKeycloak();
+        keycloak.login();
+    }
+
+    async function signup() {
+        if (!keycloak) await initKeycloak();
+        keycloak.register();
+    }
+</script>
