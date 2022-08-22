@@ -32,7 +32,9 @@ services:
   # also setup an email: Realm Settings -> Email -> fill in info (for test use check mailhog below. Use credentials Host 172.17.0.1 (=ip of host machine for any docker container), Port 1025, No encryption, No Authentication)
 
   # how to add roles to access and id tokens https://medium.com/@xavier.hahn/adding-authorization-to-asp-net-core-app-using-keycloak-c6c96ee0e655
-  # 'Adding the role to the access and id tokens' section has changed to Client Scopes -> create new. then select the created client scope -> mappers -> add mapper. Then go back to Clients -> yourClient -> Client scopes -> add client scopes -> select the new client-scope and set type Default
+  # 'Adding the role to the access and id tokens' section has changed to Client Scopes -> create new. then select the created client scope -> mappers -> add mapper ->
+  # Client ID = name of your client (this will cause keycloak to only include roles of this particular client in the token claim. If empty, keycloak adds all client roles to the claim.), Multivalued = On. Token Claim Name = roles (default in asp.net, thus automatically evaluated). Add to ID Token = On. Rest On too if you want.
+  #. Then go back to Clients -> yourClient -> Client scopes -> add client scopes -> select the new client-scope and set type Default
 
   # realm-specific JWKS is at http://localhost:4344/realms/master/protocol/openid-connect/certs (and not at .well-known/jwks.json *roll-eyes*)
   keycloak:
