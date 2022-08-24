@@ -4,9 +4,7 @@ using dotnettest.Pokemon.Models;
 using dotnettest.Pokemon.PokeApi;
 using dotnettest.Pokemon.Services;
 
-using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
 
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 ConfigurationManager configuration = builder.Configuration;
@@ -22,11 +20,7 @@ builder.Services.AddHttpClient();
 builder.Services.AddStackExchangeRedisCache(options => options.Configuration = configuration["RedisCacheUrl"]);
 builder.Services.AddDbContext<PokemonContext>();
 
-builder.Services.AddAuthentication(options =>
-{
-    options.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;
-    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-})
+builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
 .AddCookie(options =>
 {
     // Cookie settings
@@ -55,13 +49,6 @@ builder.Services.AddAuthentication(options =>
     options.Scope.Add("roles");
     options.Scope.Add("profile");
     options.DisableTelemetry = true;
-
-    options.Events.OnTokenResponseReceived = ctx =>
-    {
-        // TODO remove. This is useful for debugging because here we can see that the token retrieval actually worked
-        List<AuthenticationToken> tokens = ctx.Properties.GetTokens().ToList();
-        return Task.CompletedTask;
-    };
 });
 
 builder.Services
