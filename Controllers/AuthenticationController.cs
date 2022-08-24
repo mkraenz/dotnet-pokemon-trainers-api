@@ -15,12 +15,6 @@ namespace dotnettest.Controllers
 {
     public class AuthenticationController : Controller
     {
-        [HttpGet("~/signin")]
-        public async Task<IActionResult> SignIn()
-        {
-            return View("SignIn", await HttpContext.GetExternalProvidersAsync());
-        }
-
         [HttpPost("~/signin")]
         public async Task<IActionResult> SignIn([FromForm] string provider)
         {
@@ -35,10 +29,7 @@ namespace dotnettest.Controllers
             {
                 return BadRequest();
             }
-
-            // Instruct the middleware corresponding to the requested external identity
-            // provider to redirect the user agent to its own authorization endpoint.
-            // Note: the authenticationScheme parameter must match the value configured in Startup.cs
+            // after all signin stuff is handled with keycloak, redirect user agent to /Trainer
             return Challenge(new AuthenticationProperties { RedirectUri = "/Trainer" }, provider);
         }
 
@@ -46,11 +37,14 @@ namespace dotnettest.Controllers
         [HttpPost("~/signout")]
         public async Task SignOutCurrentUserAsync()
         {
+            // remove Session in keycloak
             await HttpContext.SignOutAsync(OpenIdConnectDefaults.AuthenticationScheme);
-            // Instruct the cookies middleware to delete the local cookie created
-            // when the user agent is redirected from the external identity provider
-            // after a successful authentication flow (e.g Google or Facebook).
+            // remove cookie from User client
             await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+
+            // redirects User agent to Index page because of 
+            // options.SignedOutRedirectUri = "/";
+            // config for keycloak OIDC in root
         }
     }
 }
