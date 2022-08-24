@@ -1,0 +1,15 @@
+﻿@using Microsoft.AspNetCore.Authentication
+@using dotnettest.Pages
+@model IndexModel
+
+@foreach (var scheme in Model.AuthenticationSchemes.OrderBy(p => p.DisplayName))
+{
+    <li class="nav-item">
+    <form action="/signin" method="post">
+        <input type="hidden" name="Provider" value="@scheme.Name" />
+        <input type="hidden" name="ReturnUrl" value="@ViewBag.ReturnUrl" />
+
+        <button class="btn btn-primary" type="submit">Sign In</button>
+    </form>
+</li>
+}

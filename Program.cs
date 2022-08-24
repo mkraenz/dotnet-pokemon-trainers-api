@@ -4,8 +4,9 @@ using dotnettest.Pokemon.Models;
 using dotnettest.Pokemon.PokeApi;
 using dotnettest.Pokemon.Services;
 
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.IdentityModel.Tokens;
 
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 ConfigurationManager configuration = builder.Configuration;
@@ -21,29 +22,47 @@ builder.Services.AddHttpClient();
 builder.Services.AddStackExchangeRedisCache(options => options.Configuration = configuration["RedisCacheUrl"]);
 builder.Services.AddDbContext<PokemonContext>();
 
-// following https://dev.to/kayesislam/integrating-openid-connect-to-your-application-stack-25ch
-builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-    .AddJwtBearer(JwtBearerDefaults.AuthenticationScheme,
-        options =>
-        {
-            // http://localhost:4344/realms/teatime
-            options.MetadataAddress = "http://localhost:4344/realms/teatime/.well-known/openid-configuration";
-            options.RequireHttpsMetadata = false; // TODO only for dev
-            options.IncludeErrorDetails = true;
-            options.TokenValidationParameters = new TokenValidationParameters()
-            {
-                ValidIssuer = "http://localhost:4344/realms/teatime",
-                ValidAudience = "test",
-                ValidateIssuer = true,
-                ValidateAudience = true,
-                ValidateIssuerSigningKey = true,
-                ValidateLifetime = true,
-            };
-        });
-// builder.Services.AddAuthorization(o => o.DefaultPolicy = new AuthorizationPolicyBuilder()
-//         .RequireAuthenticatedUser()
-//         .RequireClaim("email_verified", "true")
-//         .Build());
+builder.Services.AddAuthentication(options =>
+{
+    options.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+})
+.AddCookie(options =>
+{
+    // Cookie settings
+    options.Cookie.HttpOnly = true;
+    options.ExpireTimeSpan = TimeSpan.FromMinutes(15);
+    options.LoginPath = "/Identity/Account/Login";
+    options.AccessDeniedPath = "/Identity/Account/AccessDenied";
+    options.SlidingExpiration = true;
+    options.ExpireTimeSpan = TimeSpan.FromMinutes(15);
+    options.LogoutPath = "/signout";
+})
+.AddOpenIdConnect(options =>
+{
+    options.SignInScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+    options.Authority = "http://localhost:4344/realms/teatime/";
+    options.SignedOutRedirectUri = "/"; // https://stackoverflow.com/a/60205731/3963260
+    options.ClientSecret = "UZH5JVmo6iVpK3sjCPSGHbUYz0ueqmr2";
+    options.ClientId = "aspnet";
+    options.ResponseType = "code";
+    options.SaveTokens = true;
+    options.GetClaimsFromUserInfoEndpoint = false;
+    options.RequireHttpsMetadata = false; // TODO: WARNING: use in dev only
+    options.Scope.Add("openid");
+    options.Scope.Add("email");
+    options.Scope.Add("aspnet_roles");
+    options.Scope.Add("roles");
+    options.Scope.Add("profile");
+    options.DisableTelemetry = true;
+
+    options.Events.OnTokenResponseReceived = ctx =>
+    {
+        // TODO remove. This is useful for debugging because here we can see that the token retrieval actually worked
+        List<AuthenticationToken> tokens = ctx.Properties.GetTokens().ToList();
+        return Task.CompletedTask;
+    };
+});
 
 builder.Services
     .AddScoped<IPokeApi, PokeApiService>()

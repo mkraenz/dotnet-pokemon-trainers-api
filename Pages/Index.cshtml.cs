@@ -1,9 +1,15 @@
-﻿using Microsoft.AspNetCore.Mvc.RazorPages;
+﻿using dotnettest.Extensions;
+
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace dotnettest.Pages
 {
     public class IndexModel : PageModel
     {
+
+        public AuthenticationScheme[] AuthenticationSchemes { get; set; }
+
         private readonly ILogger<IndexModel> _logger;
 
         public IndexModel(ILogger<IndexModel> logger)
@@ -11,9 +17,9 @@ namespace dotnettest.Pages
             _logger = logger;
         }
 
-        public void OnGet()
+        public async Task OnGetAsync()
         {
-
+            AuthenticationSchemes = await HttpContext.GetExternalProvidersAsync();
         }
     }
 }
