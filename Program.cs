@@ -5,6 +5,7 @@ using dotnettest.Pokemon.PokeApi;
 using dotnettest.Pokemon.Services;
 
 using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.IdentityModel.Protocols.OpenIdConnect;
 
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 ConfigurationManager configuration = builder.Configuration;
@@ -39,7 +40,7 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
     options.SignedOutRedirectUri = "/"; // https://stackoverflow.com/a/60205731/3963260
     options.ClientSecret = "UZH5JVmo6iVpK3sjCPSGHbUYz0ueqmr2";
     options.ClientId = "aspnet";
-    options.ResponseType = "code";
+    options.ResponseType = OpenIdConnectResponseType.Code;
     options.SaveTokens = true;
     options.GetClaimsFromUserInfoEndpoint = false;
     options.RequireHttpsMetadata = false; // TODO: WARNING: use in dev only
