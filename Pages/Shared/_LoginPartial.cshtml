@@ -15,7 +15,7 @@
             <a class="nav-link text-dark"
             @* Would be great to have the OIDC middleware handle registration too, but it doesnt.  *@
             @* Using redirect to static RegistrationSuccess page with login button to work around not having 'state' query parameter. *@
-            href="http://localhost:4344/ralms/teatime/protocol/openid-connect/registrations?client_id=aspnet&response_type=code&scope=openid%20profile%20email%20aspnet_roles%20roles&redirect_uri=https://localhost:7132/RegistrationSuccess">Register</a>
+            href="http://localhost:4344/realms/teatime/protocol/openid-connect/registrations?client_id=aspnet&response_type=code&scope=openid%20profile%20email%20aspnet_roles%20roles&redirect_uri=https://localhost:7132/RegistrationSuccess">Register</a>
         </li>
         <partial name="_SignInPartial" />
     }
