@@ -34,8 +34,10 @@ namespace dotnettest.Pages
             }
 
             Claim? subjectIdClaim = HttpContext.User.FindFirst(ClaimTypes.NameIdentifier)!;
+            Claim? email = HttpContext.User.FindFirst(ClaimTypes.Email)!;
+            Claim? name = HttpContext.User.FindFirst(ClaimTypes.Name)!;
             string? subjectId = subjectIdClaim?.Value;
-            if (subjectId is null)
+            if (subjectId is null || email is null)
             {
                 Console.WriteLine("subject id is null");
                 return RedirectToPage("Errors/Error404");
@@ -43,9 +45,14 @@ namespace dotnettest.Pages
             Trainer = _trainers.GetByOwner(Guid.Parse(subjectId!));
             if (Trainer is null)
             {
-                Console.WriteLine($"Trainer for subject id not found {subjectId}");
-                // TODO create a new trainer for a newly added user
-                return RedirectToPage("Errors/Error404");
+                Console.WriteLine($"Trainer for subject id not found {subjectId}. Creating new Trainer");
+                Trainer = _trainers.Create(new Trainer()
+                {
+                    Name = name.Value,
+                    Email = email.Value,
+                    OwnerId = Guid.Parse(subjectId),
+                    Pokemons = new List<m.Pokemon>(),
+                });
             }
             Pokemons = Trainer.Pokemons;
 
