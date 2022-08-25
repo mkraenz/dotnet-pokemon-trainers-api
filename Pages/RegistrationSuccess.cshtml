@@ -3,4 +3,7 @@
 
 <h1>Registration sucessful.</h1>
 <h2>You may now login to your account, Trainer.</h2>
-<partial name="_ExternalAuthProviderPartial" />
+@foreach (var scheme in Model.AuthenticationSchemes)
+{
+    <partial name="_ExternalAuthProviderPartial" model="@scheme" />
+}
