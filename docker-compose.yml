@@ -52,7 +52,7 @@ services:
       KC_DB_USERNAME: root
       KC_DB_URL_HOST: database # using the Docker link defined above
       KC_DB_URL_PORT: 5432
-      # # TODO: automatically create db on postgres. Currently, just manually run `CREATE DATABASE "keycloak";` via Adminer -> SQL command
+      # Improve: automatically create db on postgres. Currently, just manually run `CREATE DATABASE "keycloak";` via Adminer -> SQL command
       KC_DB_URL_DATABASE: keycloak # name of the database
       KC_HEALTH_ENABLED: "true" # enables endpoints http://localhost:4344/health and /health/ready and /health/live
     depends_on:

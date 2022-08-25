@@ -13,6 +13,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace dotnettest.Controllers
 {
+    // TODO use /api/signin etc. Needs adjustments to Keycloak and Program.cs (and more?)
     public class AuthenticationController : Controller
     {
         [HttpPost("~/signin")]
