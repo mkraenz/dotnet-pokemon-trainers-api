@@ -26,15 +26,16 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
 {
     // Cookie settings
     options.Cookie.HttpOnly = true;
+    // maybe overwritten below by options.UseTokenLifetime = true;
     options.ExpireTimeSpan = TimeSpan.FromMinutes(15);
     options.LoginPath = "/Identity/Account/Login";
     options.AccessDeniedPath = "/Identity/Account/AccessDenied";
     options.SlidingExpiration = true;
-    options.ExpireTimeSpan = TimeSpan.FromMinutes(15);
     options.LogoutPath = "/signout";
 })
 .AddOpenIdConnect(options =>
 {
+    //  TODO move to config
     options.SignInScheme = CookieAuthenticationDefaults.AuthenticationScheme;
     options.Authority = "http://localhost:4344/realms/teatime/";
     options.SignedOutRedirectUri = "/"; // https://stackoverflow.com/a/60205731/3963260
@@ -43,6 +44,7 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
     options.ResponseType = OpenIdConnectResponseType.Code;
     options.SaveTokens = true;
     options.GetClaimsFromUserInfoEndpoint = false;
+    options.UseTokenLifetime = true;
     options.RequireHttpsMetadata = false; // TODO: WARNING: use in dev only
     options.Scope.Add("openid");
     options.Scope.Add("email");
