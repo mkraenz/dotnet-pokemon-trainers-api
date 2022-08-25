@@ -1,9 +1,11 @@
 @page
 @model TrainerModel
+
 @{
     ViewData["Title"] = "Overview";
     int counter = 0;
 }
+
 @if (User?.Identity?.IsAuthenticated ?? false)
 {
     <h1>Welcome, @User.Identity.Name</h1>

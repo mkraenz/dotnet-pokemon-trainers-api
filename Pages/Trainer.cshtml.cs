@@ -1,6 +1,10 @@
+
+using System.Security.Claims;
+
 using dotnettest.Pokemon.Models;
 using dotnettest.Pokemon.Services;
 
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
 using m = dotnettest.Pokemon.Models;
@@ -22,22 +26,36 @@ namespace dotnettest.Pages
             _teams = teams;
         }
 
-        public void OnGet(Guid? trainerId)
+        public ActionResult OnGet()
         {
-            if (trainerId is null)
+            if (!HttpContext.User.Identity.IsAuthenticated)
             {
-                return;
+                return RedirectToPage("Index");
             }
-            Trainer = _trainers.Get((Guid)trainerId);
+
+            // static Claim GetSubjectIdClaim(ClaimsPrincipal user)
+            // {
+            //     return user.Claims.First(c => c.Type == ClaimTypes.NameIdentifier);
+            // }
+
+            Claim subjectIdClaim = HttpContext.User.Claims.First(c => c.Type == ClaimTypes.NameIdentifier);
+            string? subjectId = subjectIdClaim.Value;
+            if (subjectId is null)
+            {
+                return RedirectToPage("Errors/Error404");
+            }
+            Trainer = _trainers.GetByOwner(Guid.Parse(subjectId!));
             if (Trainer is null)
             {
-                return;
+                return RedirectToPage("Errors/Error404");
             }
             Pokemons = Trainer.Pokemons;
 
             _ = Trainer.Pokemons.Take(6).ToList();
             Team = GetTeam(Trainer);
+            return Page();
         }
+
 
         private Team GetTeam(Trainer trainer)
         {

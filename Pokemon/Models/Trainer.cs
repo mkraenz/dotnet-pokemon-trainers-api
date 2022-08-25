@@ -10,6 +10,8 @@ namespace dotnettest.Pokemon.Models
     {
         public Guid Id { get; set; } = Guid.NewGuid();
 
+        public Guid OwnerId { get; set; }
+
         [Required]
         [StringLength(200, MinimumLength = 3)]
         public string Name { get; set; } = "";

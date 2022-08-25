@@ -50,6 +50,7 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
     options.Scope.Add("roles");
     options.Scope.Add("profile");
     options.DisableTelemetry = true;
+    // Note: .NET uses claim.Type == ClaimTypes.NameIdentifier for the subject id 
 });
 
 builder.Services
