@@ -34,17 +34,18 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
 })
 .AddOpenIdConnect(options =>
 {
-    //  TODO move to config
     options.SignInScheme = CookieAuthenticationDefaults.AuthenticationScheme;
-    options.Authority = "http://localhost:4344/realms/teatime/";
+    options.Authority = configuration["KeycloakOauth2:ServerRealm"];
     options.SignedOutRedirectUri = "/"; // https://stackoverflow.com/a/60205731/3963260
-    options.ClientSecret = "UZH5JVmo6iVpK3sjCPSGHbUYz0ueqmr2";
-    options.ClientId = "aspnet";
+    options.ClientSecret = configuration["KeycloakOauth2:ClientSecret"];
+    options.ClientId = configuration["KeycloakOauth2:ClientId"];
     options.ResponseType = OpenIdConnectResponseType.Code;
     options.SaveTokens = true;
+    options.UsePkce = true;
     options.GetClaimsFromUserInfoEndpoint = false;
     options.UseTokenLifetime = true;
-    options.RequireHttpsMetadata = false; // TODO: WARNING: use in dev only
+    options.RequireHttpsMetadata = configuration["KeycloakOauth2:RequireHttps"] != bool.FalseString
+        || bool.Parse(configuration["KeycloakOauth2:RequireHttps"]);
     options.Scope.Add("openid");
     options.Scope.Add("email");
     options.Scope.Add("aspnet_roles");
