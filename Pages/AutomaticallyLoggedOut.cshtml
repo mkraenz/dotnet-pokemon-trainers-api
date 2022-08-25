@@ -1,0 +1,10 @@
+@page
+@model AutomaticallyLoggedOutModel
+
+<h1>You have been automatically signed out. Please sign in again.</h1>
+
+
+@foreach (var scheme in Model.AuthenticationSchemes.OrderBy(p => p.DisplayName))
+{
+    <partial name="_ExternalAuthProviderPartial" model="@scheme" />
+}

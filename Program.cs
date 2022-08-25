@@ -30,8 +30,7 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
     options.ExpireTimeSpan = TimeSpan.FromMinutes(15);
     options.SlidingExpiration = true;
     options.AccessDeniedPath = "/Errors/Error404";
-    // TODO fix
-    options.LoginPath = "/signin";
+    options.LoginPath = "/AutomaticallyLoggedOut";
     options.LogoutPath = "/signout";
 })
 .AddOpenIdConnect(options =>

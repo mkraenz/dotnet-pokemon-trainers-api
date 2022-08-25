@@ -1,4 +1,6 @@
-﻿<ul class="navbar-nav">
+﻿@using dotnettest.Extensions;
+
+<ul class="navbar-nav">
     @if (User.Identity.IsAuthenticated)
     {
         <li class="nav-item">
@@ -17,6 +19,10 @@
             @* Using redirect to static RegistrationSuccess page with login button to work around not having 'state' query parameter. *@
             href="http://localhost:4344/realms/teatime/protocol/openid-connect/registrations?client_id=aspnet&response_type=code&scope=openid%20profile%20email%20aspnet_roles%20roles&redirect_uri=https://localhost:7132/RegistrationSuccess">Register</a>
         </li>
-        <partial name="_SignInPartial" />
+        @foreach (var scheme in await Context.GetExternalProvidersAsync())
+        {
+            <partial name="_ExternalAuthProviderPartial" model="@scheme" />
+            
+        }
     }
 </ul>

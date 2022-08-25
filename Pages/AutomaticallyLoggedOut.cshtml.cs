@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 namespace dotnettest.Pages
 {
     [AllowAnonymous]
-    public class RegistrationSuccessModel : PageModel
+    public class AutomaticallyLoggedOutModel : PageModel
     {
 
         public AuthenticationScheme[]? AuthenticationSchemes { get; set; }
