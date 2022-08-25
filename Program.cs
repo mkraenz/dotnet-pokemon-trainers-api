@@ -29,6 +29,7 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
     // maybe overwritten below by options.UseTokenLifetime = true;
     options.ExpireTimeSpan = TimeSpan.FromMinutes(15);
     options.SlidingExpiration = true;
+    options.AccessDeniedPath = "/Errors/Error404";
     // TODO fix
     options.LoginPath = "/signin";
     options.LogoutPath = "/signout";
@@ -56,10 +57,14 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
     // Note: .NET uses claim.Type == ClaimTypes.NameIdentifier for the subject id 
 });
 
-builder.Services.AddAuthorization(options => options.FallbackPolicy = new AuthorizationPolicyBuilder()
-        .RequireAuthenticatedUser()
-        .RequireRole("regular")
-        .Build());
+builder.Services.AddAuthorization(options =>
+{
+    options.FallbackPolicy = new AuthorizationPolicyBuilder()
+            .RequireAuthenticatedUser()
+            .RequireRole("regular")
+            .Build();
+    options.AddPolicy("RequireAdministrator", policy => policy.RequireRole("administrator"));
+});
 
 builder.Services
     .AddScoped<IPokeApi, PokeApiService>()
@@ -70,7 +75,12 @@ builder.Services
     .AddScoped<TeamController>();
 
 builder.Services.AddControllers();
-builder.Services.AddRazorPages();
+builder.Services.AddRazorPages(options =>
+{
+    _ = options.Conventions.AuthorizePage("/Contact");
+    // RequireAdministrator is a policy that we register above
+    _ = options.Conventions.AuthorizeFolder("/Admin", "RequireAdministrator");
+});
 // enable this when editing form views or _layout. Then reload browser manually with F5.
 // .AddRazorRuntimeCompilation();
 
