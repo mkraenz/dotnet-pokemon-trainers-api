@@ -29,7 +29,7 @@ namespace dotnettest.Pokemon.Controllers
             _logger = logger;
         }
 
-
+        [HttpGet]
         public IEnumerable<m.Pokemon> GetAll()
         {
             return _context.Pokemons.Include(p => p.Species).AsNoTracking().ToList();
