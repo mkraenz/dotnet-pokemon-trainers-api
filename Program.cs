@@ -5,6 +5,7 @@ using dotnettest.Pokemon.PokeApi;
 using dotnettest.Pokemon.Services;
 
 using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.IdentityModel.Protocols.OpenIdConnect;
 
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
@@ -27,9 +28,9 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
     options.Cookie.HttpOnly = true;
     // maybe overwritten below by options.UseTokenLifetime = true;
     options.ExpireTimeSpan = TimeSpan.FromMinutes(15);
-    options.LoginPath = "/Identity/Account/Login";
-    options.AccessDeniedPath = "/Identity/Account/AccessDenied";
     options.SlidingExpiration = true;
+    // TODO fix
+    options.LoginPath = "/signin";
     options.LogoutPath = "/signout";
 })
 .AddOpenIdConnect(options =>
@@ -54,6 +55,11 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
     options.DisableTelemetry = true;
     // Note: .NET uses claim.Type == ClaimTypes.NameIdentifier for the subject id 
 });
+
+builder.Services.AddAuthorization(options => options.FallbackPolicy = new AuthorizationPolicyBuilder()
+        .RequireAuthenticatedUser()
+        .RequireRole("regular")
+        .Build());
 
 builder.Services
     .AddScoped<IPokeApi, PokeApiService>()

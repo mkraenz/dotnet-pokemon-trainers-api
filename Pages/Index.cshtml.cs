@@ -1,10 +1,12 @@
 ﻿using dotnettest.Extensions;
 
 using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace dotnettest.Pages
 {
+    [AllowAnonymous]
     public class IndexModel : PageModel
     {
 

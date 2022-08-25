@@ -9,11 +9,13 @@ using dotnettest.Extensions;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.OpenIdConnect;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace dotnettest.Controllers
 {
     // TODO use /api/signin etc. Needs adjustments to Keycloak and Program.cs (and more?)
+    [AllowAnonymous]
     public class AuthenticationController : Controller
     {
         [HttpPost("~/signin")]
