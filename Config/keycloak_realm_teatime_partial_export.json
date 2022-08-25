@@ -73,7 +73,6 @@
         "composites": {
           "realm": ["offline_access", "uma_authorization"],
           "client": {
-            "aspnet": ["regular"],
             "account": ["view-profile", "manage-account"]
           }
         },
@@ -418,7 +417,30 @@
       ]
     }
   },
-  "groups": [],
+  "groups": [
+    {
+      "id": "5654ab60-a2be-47fb-a452-25cc2bc173eb",
+      "name": "client_aspnet_administrators",
+      "path": "/client_aspnet_administrators",
+      "attributes": {},
+      "realmRoles": [],
+      "clientRoles": {
+        "aspnet": ["administrator"]
+      },
+      "subGroups": []
+    },
+    {
+      "id": "90f57942-e3f5-4882-9db7-014604ed09f0",
+      "name": "client_aspnet_regular_users",
+      "path": "/client_aspnet_regular_users",
+      "attributes": {},
+      "realmRoles": [],
+      "clientRoles": {
+        "aspnet": ["regular"]
+      },
+      "subGroups": []
+    }
+  ],
   "defaultRole": {
     "id": "44a35b9e-af29-443c-b515-9a5306ca264b",
     "name": "default-roles-teatime",
@@ -427,6 +449,7 @@
     "clientRole": false,
     "containerId": "5d5c0c42-b83d-411c-bc5d-959d542d96a6"
   },
+  "defaultGroups": ["/client_aspnet_regular_users"],
   "requiredCredentials": ["password"],
   "otpPolicyType": "totp",
   "otpPolicyAlgorithm": "HmacSHA1",
