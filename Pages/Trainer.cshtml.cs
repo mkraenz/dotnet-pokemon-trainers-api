@@ -33,20 +33,18 @@ namespace dotnettest.Pages
                 return RedirectToPage("Index");
             }
 
-            // static Claim GetSubjectIdClaim(ClaimsPrincipal user)
-            // {
-            //     return user.Claims.First(c => c.Type == ClaimTypes.NameIdentifier);
-            // }
-
-            Claim subjectIdClaim = HttpContext.User.Claims.First(c => c.Type == ClaimTypes.NameIdentifier);
-            string? subjectId = subjectIdClaim.Value;
+            Claim? subjectIdClaim = HttpContext.User.FindFirst(ClaimTypes.NameIdentifier)!;
+            string? subjectId = subjectIdClaim?.Value;
             if (subjectId is null)
             {
+                Console.WriteLine("subject id is null");
                 return RedirectToPage("Errors/Error404");
             }
             Trainer = _trainers.GetByOwner(Guid.Parse(subjectId!));
             if (Trainer is null)
             {
+                Console.WriteLine($"Trainer for subject id not found {subjectId}");
+                // TODO create a new trainer for a newly added user
                 return RedirectToPage("Errors/Error404");
             }
             Pokemons = Trainer.Pokemons;

@@ -6,13 +6,8 @@
     int counter = 0;
 }
 
-@if (User?.Identity?.IsAuthenticated ?? false)
-{
-    <h1>Welcome, @User.Identity.Name</h1>
-}
-
 <div class="text-center d-flex flex-column justify-content-between fullwidth">
-    <h1 class="display-4 mb-5 mt-5">Welcome back, Trainer @(User.Identity.Name)</h1>
+    <h1 class="display-4 mb-5 mt-5">Welcome back, Trainer @(User.Identity.Name).</h1>
     <h2 class="mb-4">
         @if (Model.Team?.Name == null)
         {
