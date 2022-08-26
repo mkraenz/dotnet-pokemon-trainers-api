@@ -28,7 +28,7 @@ namespace dotnettest.Pages
 
         public ActionResult OnGet()
         {
-            if (!HttpContext.User.Identity.IsAuthenticated)
+            if (HttpContext.User.Identity is not null || !HttpContext.User.Identity!.IsAuthenticated)
             {
                 return RedirectToPage("Index");
             }

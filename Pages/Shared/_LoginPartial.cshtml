@@ -1,7 +1,7 @@
 ﻿@using dotnettest.Extensions;
 
 <ul class="navbar-nav">
-    @if (User.Identity.IsAuthenticated)
+    @if (User.Identity is not null && User.Identity.IsAuthenticated)
     {
         <li class="nav-item">
             <a class="nav-link text-dark" title="Manage">Hello

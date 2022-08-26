@@ -10,7 +10,7 @@ namespace dotnettest.Pages
     public class AutomaticallyLoggedOutModel : PageModel
     {
 
-        public AuthenticationScheme[]? AuthenticationSchemes { get; set; }
+        public AuthenticationScheme[] AuthenticationSchemes { get; set; } = Array.Empty<AuthenticationScheme>();
 
         public async Task OnGetAsync()
         {

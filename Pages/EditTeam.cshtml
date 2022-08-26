@@ -1,5 +1,6 @@
 @page "{id:Guid}"
 @model EditTeamModel
+@using m = Pokemon.Models
 
 @{
     ViewData["Title"] = "Edit Team";
@@ -9,12 +10,12 @@
     var fourthPokemon = Model.Pokemons.FirstOrDefault(p => p.Id == Model.Team.FourthPokemonId);
     var fifthPokemon = Model.Pokemons.FirstOrDefault(p => p.Id == Model.Team.FifthPokemonId);
     var sixthPokemon = Model.Pokemons.FirstOrDefault(p => p.Id == Model.Team.SixthPokemonId);
-    Func<dynamic, Task<string>> pokemonSelectOptionsTemplate = async (pokemon) =>
+    Func<m.Pokemon?, Task<string>> pokemonSelectOptionsTemplate = async (pokemon) =>
     {
-        @if (firstPokemon is not null)
+        @if (pokemon is not null)
         {
-            <option value="@(firstPokemon.Id)" class="text-capitalize" selected="selected">
-                @firstPokemon.Species.Name</option>
+            <option value="@(pokemon.Id)" class="text-capitalize" selected="selected">
+                @pokemon.Species.Name</option>
         }
         else
         {

@@ -1,7 +1,4 @@
-﻿using dotnettest.Extensions;
-
-using Microsoft.AspNetCore.Authentication;
-using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace dotnettest.Pages
@@ -10,18 +7,13 @@ namespace dotnettest.Pages
     public class IndexModel : PageModel
     {
 
-        public AuthenticationScheme[] AuthenticationSchemes { get; set; }
 
-        private readonly ILogger<IndexModel> _logger;
-
-        public IndexModel(ILogger<IndexModel> logger)
+        public IndexModel()
         {
-            _logger = logger;
         }
 
-        public async Task OnGetAsync()
+        public void OnGet()
         {
-            AuthenticationSchemes = await HttpContext.GetExternalProvidersAsync();
         }
     }
 }
