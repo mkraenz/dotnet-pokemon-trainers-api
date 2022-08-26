@@ -28,14 +28,14 @@ namespace dotnettest.Pages
 
         public ActionResult OnGet()
         {
-            if (HttpContext.User.Identity is null || !HttpContext.User.Identity!.IsAuthenticated)
+            if (User.Identity is null || !User.Identity!.IsAuthenticated)
             {
                 return RedirectToPage("Index");
             }
 
-            Claim? subjectIdClaim = HttpContext.User.FindFirst(ClaimTypes.NameIdentifier)!;
-            Claim? email = HttpContext.User.FindFirst(ClaimTypes.Email)!;
-            Claim? name = HttpContext.User.FindFirst(ClaimTypes.Name)!;
+            Claim? subjectIdClaim = User.FindFirst(ClaimTypes.NameIdentifier)!;
+            Claim? email = User.FindFirst(ClaimTypes.Email)!;
+            Claim? name = User.FindFirst(ClaimTypes.Name)!;
             string? subjectId = subjectIdClaim?.Value;
             if (subjectId is null || email is null)
             {
@@ -56,7 +56,6 @@ namespace dotnettest.Pages
             }
             Pokemons = Trainer.Pokemons;
 
-            _ = Trainer.Pokemons.Take(6).ToList();
             Team = GetTeam(Trainer);
             return Page();
         }

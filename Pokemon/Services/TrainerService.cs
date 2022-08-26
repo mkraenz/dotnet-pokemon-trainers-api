@@ -36,9 +36,11 @@ namespace dotnettest.Pokemon.Services
             return _context.Trainers.Include(t => t.Pokemons).ThenInclude(p => p.Species).AsNoTracking().FirstOrDefault(p => p.Id == id);
         }
 
-        public Trainer? GetByOwner(Guid ownerId)
+        public Trainer? GetByOwner(Guid ownerId, bool noIncludes = false)
         {
-            return _context.Trainers.Include(t => t.Pokemons).ThenInclude(p => p.Species).AsNoTracking().FirstOrDefault(p => p.OwnerId == ownerId);
+            return noIncludes
+                ? _context.Trainers.AsNoTracking().FirstOrDefault(t => t.OwnerId == ownerId)
+                : _context.Trainers.Include(t => t.Pokemons).ThenInclude(p => p.Species).AsNoTracking().FirstOrDefault(t => t.OwnerId == ownerId);
         }
 
         public Trainer Create(Trainer trainer)

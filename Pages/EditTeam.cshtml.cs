@@ -1,5 +1,3 @@
-using System.Text.Json;
-
 using dotnettest.Pokemon.Controllers;
 using dotnettest.Pokemon.Dtos;
 using dotnettest.Pokemon.Models;
@@ -70,8 +68,7 @@ namespace dotnettest.Pages
             {
                 ActionResult<Team> actionResult = _teamController.Update((Guid)id, Team);
                 // TODO i think actionResult can fail but still return with errors like NotFound or BadRequest. would need to handle that, or maybe directly go the service instead.
-                RedirectToPageResult res = RedirectToPage("Trainer", new { trainerId = actionResult.Value.TrainerId });
-                Console.WriteLine(JsonSerializer.Serialize(res.RouteValues));
+                RedirectToPageResult res = RedirectToPage("Trainer", new { trainerId = actionResult.Value!.TrainerId });
                 return res;
             }
             catch (Exception)
