@@ -1,5 +1,23 @@
 # Pokemon Team Manager
 
+An ASP.NET Core + Razor Pages learning project with the PokeAPI.
+
+![Screenshot of Pokemon Team Manager Index Page](/wwwroot/images/index-page-for-github.png)
+![Screenshot of Pokemon Team Manager Trainer Page](/wwwroot/images/trainer-page-for-github.png)
+
+## Technologies
+
+- **ASP.NET** Core 6.0
+- **Razor Pages**
+- **Entity Framework** Core 6.0
+- a bit of Web API using ASP.NET Core MVC (remainders from initial attempt)
+- Docker
+- Authentication and role-based Authorization using **Keycloak** via OIDC
+- **Mailhog**
+- PostgreSQL
+- Redis (for caching even though its useless in this app. I just wanted to try working with it from .NET)
+- [PokeAPI](https://pokeapi.co/)
+
 ## Conventions
 
 ### Domain Language
@@ -76,3 +94,11 @@ I have no name!@f1ba8cef8725:/$ redis-cli
 OK
 127.0.0.1:6379>
 ```
+
+## Resources
+
+- [Auth in ASP.NET](https://docs.microsoft.com/en-us/aspnet/core/security/authentication/?view=aspnetcore-6.0)
+- [Scaffolding / Code Generation](https://docs.microsoft.com/en-us/aspnet/core/tutorials/razor-pages/page?view=aspnetcore-6.0&tabs=visual-studio)
+- [OpenID Connect with ASP.net diagram](https://docs.microsoft.com/en-us/azure/active-directory/develop/v2-protocols-oidc) (Note: diagram uses implicit flow, we use the more secure but complicated Authorization Code Flow with PKCE)
+- [Razor HTML helpers](https://www.tutorialsteacher.com/mvc/html-helpers)
+- [Razor Validation helpers](https://www.tutorialsteacher.com/mvc/htmlhelper-validationmessagefor)
