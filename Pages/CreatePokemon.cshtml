@@ -1,0 +1,44 @@
+@page
+@model CreatePokemonModel
+
+@{
+    ViewData["Title"] = "Create Pokemon";
+}
+
+<h1>Create Pokemon</h1>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger mb-4"></div>
+            <input type="hidden" asp-for="@(Model.Pokemon.TrainerId)" value="@Model.Pokemon.TrainerId" />
+            @* TODO SpeciesId. select by species name *@
+            <div class="form-group mb-4">
+                <label asp-for="@(Model.Pokemon.SpeciesId)" class="control-label"></label>
+                <input asp-for="@(Model.Pokemon.SpeciesId)" class="form-control" type="number" min="1" />
+                <span asp-validation-for="@(Model.Pokemon.SpeciesId)" class="text-danger"></span>
+            </div>
+            <div class="form-group mb-4">
+                <label asp-for="@(Model.Pokemon.Level)" class="control-label"></label>
+                <input asp-for="@(Model.Pokemon.Level)" class="form-control" type="number" max="100" min="1" />
+                <span asp-validation-for="@(Model.Pokemon.Level)" class="text-danger"></span>
+            </div>
+            <div class="form-group mb-4">
+                <label asp-for="@(Model.Pokemon.Nickname)" class="control-label"></label>
+                <input asp-for="@(Model.Pokemon.Nickname)" class="form-control" />
+                <span asp-validation-for="@(Model.Pokemon.Nickname)" class="text-danger"></span>
+            </div>
+            <div class="form-group mb-4">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-page="/Trainer">Go back</a>
+</div>
+
+@section Scripts {
+@{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

@@ -44,9 +44,6 @@
                 <span asp-validation-for="@(Model.Team.Name)" class="text-danger"></span>
             </div>
 
-            @* see
-                https://docs.microsoft.com/en-us/aspnet/core/mvc/views/razor?view=aspnetcore-6.0#templated-razor-delegates
-                for how to use templates *@
             <div class="form group mb-4">
                 @* dynamically setting asp-for did not work. it just statically became `key` (from the name of the
                     template function parameter I used) *@

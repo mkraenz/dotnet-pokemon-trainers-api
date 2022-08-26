@@ -3,7 +3,6 @@
 
 @{
     ViewData["Title"] = "Overview";
-    int counter = 0;
 }
 
 @if (User.Identity is not null)
@@ -102,6 +101,7 @@
 
         <div class="mb-5">
             <h2 class="mb-4">Your Bank</h2>
+            <partial name="_AddPokemonButton" />
             <div class="container">
                 <div class="row">
                     @foreach (var pokemon in Model.Pokemons)
@@ -110,11 +110,9 @@
                             <figure class="col d-flex flex-column align-items-center">
                                 <img width="100px" src='@Url.Content("~/images/pokeball.png")' style="opacity: 0.2;" />
                                 <img width="100px" src="@(pokemon.Species.SpriteUrl)" class="position-absolute" />
-                                <figcaption class="text-capitalize">@counter @(pokemon.Species.Name)</figcaption>
+                                <figcaption class="text-capitalize">@(pokemon.Species.Name)</figcaption>
                             </figure>
                         </div>
-
-                        counter++;
                     }
                 </div>
             </div>

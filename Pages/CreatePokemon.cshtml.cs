@@ -9,20 +9,20 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace dotnettest.Pages
 {
-    public class CreateTeamModel : PageModel
+    public class CreatePokemonModel : PageModel
     {
-        public Guid TrainerId { get; set; }
+        public Guid Teamid { get; set; }
 
         [BindProperty]
-        public CreateTeamDto Team { get; set; } = new CreateTeamDto();
+        public CreatePokemonDto Pokemon { get; set; } = new CreatePokemonDto();
 
-        private readonly TeamController _teamController;
+        private readonly PokemonController _pokemonController;
         private readonly TrainerService _trainers;
-        private readonly ILogger<CreateTeamModel> _logger;
+        private readonly ILogger<CreatePokemonModel> _logger;
 
-        public CreateTeamModel(TeamController teamController, TrainerService trainers, ILogger<CreateTeamModel> logger)
+        public CreatePokemonModel(PokemonController pokemonController, TrainerService trainers, ILogger<CreatePokemonModel> logger)
         {
-            _teamController = teamController;
+            _pokemonController = pokemonController;
             _trainers = trainers;
             _logger = logger;
         }
@@ -35,31 +35,28 @@ namespace dotnettest.Pages
             {
                 throw new Exception($"This should not have happened. A user without Trainer was found. SubjectId: {subjectId}");
             }
-            // TODO refactor: remove separate property and instead set dto.TrainerId
-            TrainerId = trainer.Id;
+            Pokemon.TrainerId = trainer.Id;
             return Page();
         }
 
 
-        public IActionResult OnPost()
+        public async Task<IActionResult> OnPostAsync()
         {
             if (!ModelState.IsValid)
             {
                 return Page();
             }
-            // refetching trainer id because we do not get the same class instance as on the previous GET request (http is stateless)
             string subjectId = User.FindFirstValue(ClaimTypes.NameIdentifier);
             Pokemon.Models.Trainer? trainer = _trainers.GetByOwner(Guid.Parse(subjectId), true);
-            bool isUnauthorized = Team.TrainerId != trainer?.Id;
+            bool isUnauthorized = Pokemon.TrainerId != trainer?.Id;
             if (isUnauthorized)
             {
-                _logger.LogWarning("User tried to create a team for another trainer. {subjectId}", new { subjectId });
+                _logger.LogWarning("User tried to create a Pokemon for another trainer. {subjectId}", new { subjectId });
                 return RedirectToPage("Errors/Error404");
             }
             try
             {
-                ActionResult<Pokemon.Models.Team> createdTeam = _teamController.Create(Team);
-                _trainers.Update(trainer!.Id, new UpdateTrainerDto() { ActiveTeamId = createdTeam.Value!.Id });
+                ActionResult<Pokemon.Models.Pokemon> createdTeam = await _pokemonController.CreateAsync(Pokemon);
                 return RedirectToPage("./Trainer");
             }
             catch (Exception)

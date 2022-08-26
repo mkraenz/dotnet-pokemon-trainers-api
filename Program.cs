@@ -71,7 +71,8 @@ builder.Services
     .AddScoped<SpeciesService>()
     .AddScoped<TeamService>()
     .AddScoped<TrainerService>()
-    .AddScoped<TeamController>();
+    .AddScoped<TeamController>()
+    .AddScoped<PokemonController>();
 
 builder.Services.AddControllers();
 builder.Services.AddRazorPages(options =>
