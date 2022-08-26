@@ -8,6 +8,7 @@ namespace dotnettest.Pokemon.Dtos
     public class CreatePokemonDto
     {
         [Required]
+        [Range(1, 905)] // 905 is the last pkmn in generation 8
         [DisplayName("National Pokedex Number")]
         public int SpeciesId { get; set; }
         public Guid TrainerId { get; set; }
