@@ -26,7 +26,7 @@ namespace dotnettest.Pages.Admin.Trainers
         [BindProperty]
         public UpdateTrainerDto Trainer { get; set; } = default!;
 
-        public async Task<IActionResult> OnGetAsync(Guid? id)
+        public IActionResult OnGet(Guid? id)
         {
             if (id == null || _context.Trainers == null)
             {
@@ -44,7 +44,7 @@ namespace dotnettest.Pages.Admin.Trainers
 
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see https://aka.ms/RazorPagesCRUD.
-        public async Task<IActionResult> OnPostAsync()
+        public IActionResult OnPost()
         {
             // if (!ModelState.IsValid)
             // {
